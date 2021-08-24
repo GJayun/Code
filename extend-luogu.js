@@ -103,8 +103,8 @@ const lg_content = url => new Promise((res, rej) =>
 )
 
 const lg_alert = uindow.show_alert
-    ? msg => uindow.show_alert("ºÜ±§Ç¸", msg.replaceAll("\n", "<br />"))
-    : msg => uindow.alert("ºÜ±§Ç¸\n" + msg)
+    ? msg => uindow.show_alert("å¾ˆæŠ±æ­‰", msg.replaceAll("\n", "<br />"))
+    : msg => uindow.alert("å¾ˆæŠ±æ­‰\n" + msg)
 
 const springboard = (param, styl) => {
     const q = new URLSearchParams(); for (let k in param) q.set(k, param[k])
@@ -288,7 +288,7 @@ const mod = {
     }
 }
 
-mod.reg_main("springboard", "¿çÓòÌø°å", [ "@bili/robots.txt?.*", "@/robots.txt?.*" ], null, () => {
+mod.reg_main("springboard", "è·¨åŸŸè·³æ¿", [ "@bili/robots.txt?.*", "@/robots.txt?.*" ], null, () => {
     const q = new URLSearchParams(location.search)
     switch (q.get("type")) {
     // Note: ->
@@ -301,7 +301,7 @@ mod.reg_main("springboard", "¿çÓòÌø°å", [ "@bili/robots.txt?.*", "@/robots.txt?.
         break
     case "page":
         const url = q.get("url")
-        if (! q.get("confirm") || confirm(`ÊÇ·ñ¼ÓÔØÀ´×Ô ${url} µÄÒ³Ãæ£¿`))
+        if (! q.get("confirm") || confirm(`æ˜¯å¦åŠ è½½æ¥è‡ª ${url} çš„é¡µé¢ï¼Ÿ`))
             document.body.innerHTML = `<iframe src="${url}" exlg="exlg"></iframe>`
         break
     // Note: <-
@@ -320,14 +320,14 @@ mod.reg_main("springboard", "¿çÓòÌø°å", [ "@bili/robots.txt?.*", "@/robots.txt?.
     }
 `)
 
-mod.reg_main("version-data", "°æ±¾Êı¾İ", "@tcs2/release/exlg-nextgen", null, () =>
+mod.reg_main("version-data", "ç‰ˆæœ¬æ•°æ®", "@tcs2/release/exlg-nextgen", null, () =>
     uindow.parent.postMessage([ document.body.innerText ], "*")
 )
 
-mod.reg_hook_new("dash-bridge", "¿ØÖÆÇÅ", "@/.*", {
+mod.reg_hook_new("dash-bridge", "æ§åˆ¶æ¡¥", "@/.*", {
     source: {
         ty: "enum", vals: [ "tcs", "debug", "gh_index", "gh_bundle" ], dft: "tcs",
-        info: [ "The website to open when clicking the exlg button", "µã»÷ exlg °´Å¥Ê±´ò¿ªµÄÍøÒ³" ]
+        info: [ "The website to open when clicking the exlg button", "ç‚¹å‡» exlg æŒ‰é’®æ—¶æ‰“å¼€çš„ç½‘é¡µ" ]
     }
 }, ({ msto, args }) => {
     const source = msto.source
@@ -341,14 +341,9 @@ L707DMYAAACESURBVAjXZY7HEoJAEAWfuPoMCwYwB8SEWcwB5P8/i12Fk32aqenqGkCTM/JIEQUU
 WRLlynepStNizaw3mtqy+cNp6WO7w26vTw7UPBxJOmO4E0pvCmNGlQDm5GIJ119xvcHW4m5/UK5/
 ZHAKyLMycPHS5vWmm/fH0+brHUbZOx/GAn8k5GQJi5PvrVEAAAAldEVYdGRhdGU6Y3JlYXRlADIw
 MjEtMDgtMjRUMTU6MDI6NDcrMDM6MDDFld41AAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA4LTI0
-VDE1OjAyOjQ3KzAzOjAwtMhmiQAAAABJRU5ErkJggg=="></image></svg> ÉèÖÃ</div>|
+VDE1OjAyOjQ3KzAzOjAwtMhmiQAAAABJRU5ErkJggg=="></image></svg> è®¾ç½®</div>|
      </>`)
         .prependTo(args)
-        .css("backgroundColor", {
-            debug: "steelblue",
-            gh_index: "darkblue",
-            gh_bundle: "darkslateblue"
-        }[source])
         .on("click", () => uindow.exlg.dash = uindow.open({
             tcs: "https://service-otgstbe5-1305163805.sh.apigw.tencentcs.com/release/exlg-setting",
             debug: "localhost:1634/dashboard",
@@ -357,7 +352,7 @@ VDE1OjAyOjQ3KzAzOjAwtMhmiQAAAABJRU5ErkJggg=="></image></svg> ÉèÖÃ</div>|
         }[source]))
 }, (e) => {
     const $tmp = $(e.target).find(".user-nav > nav > span > div > div > footer")
-    if ($tmp.length) return { result: ($tmp.length), args: ($tmp[0].tagName === "DIV" ? $($tmp[0].firstChild) : $tmp) } // Note: Ö±½ÓÓÃÈıÄ¿ÔËËã·û²»ÓÃ if »á´¥·¢ undefined µÄ tagName ²»ÖªµÀÎªÊ²Ã´
+    if ($tmp.length) return { result: ($tmp.length), args: ($tmp[0].tagName === "DIV" ? $($tmp[0].firstChild) : $tmp) } // Note: ç›´æ¥ç”¨ä¸‰ç›®è¿ç®—ç¬¦ä¸ç”¨ if ä¼šè§¦å‘ undefined çš„ tagName ä¸çŸ¥é“ä¸ºä»€ä¹ˆ
     else return { result: 0 }
 }, () => $("nav.user-nav > span > div > div > footer, div.user-nav > nav > span > div > div > footer"), `
     /* dash */
@@ -475,7 +470,7 @@ VDE1OjAyOjQ3KzAzOjAwtMhmiQAAAABJRU5ErkJggg=="></image></svg> ÉèÖÃ</div>|
     .exlg-difficulty-color.color-7 { color: rgb(14, 29, 105)!important; }
 `)
 
-mod.reg_main("dash-board", "¿ØÖÆÃæ°å", mod.path_dash_board, {
+mod.reg_main("dash-board", "æ§åˆ¶é¢æ¿", mod.path_dash_board, {
     msg: {
         ty: "object",
         priv: true,
@@ -493,7 +488,7 @@ mod.reg_main("dash-board", "¿ØÖÆÃæ°å", mod.path_dash_board, {
     },
     lang: {
         ty: "enum", dft: "en", vals: [ "en", "zh" ],
-        desc: [ "Language of descriptions in the dashboard", "¿ØÖÆÃæ°åÌáÊ¾ÓïÑÔ" ]
+        desc: [ "Language of descriptions in the dashboard", "æ§åˆ¶é¢æ¿æç¤ºè¯­è¨€" ]
     }
 }, () => {
     const novogui_modules = [
@@ -521,7 +516,7 @@ mod.reg_main("dash-board", "¿ØÖÆÃæ°å", mod.path_dash_board, {
     uindow.novogui.init(novogui_modules)
 })
 
-mod.reg_chore("update", "¼ì²é¸üĞÂ", "1D", mod.path_dash_board, null, () => {
+mod.reg_chore("update", "æ£€æŸ¥æ›´æ–°", "1D", mod.path_dash_board, null, () => {
     springboard({ type: "update" }).appendTo($("body")).hide()
     uindow.addEventListener("message", e => {
         if (e.data[0] !== "update") return
@@ -540,7 +535,7 @@ mod.reg_chore("update", "¼ì²é¸üĞÂ", "1D", mod.path_dash_board, null, () => {
 })
 
 // TODO
-mod.reg("update-log", "¸üĞÂÈÕÖ¾ÏÔÊ¾", "@/", {
+mod.reg("update-log", "æ›´æ–°æ—¥å¿—æ˜¾ç¤º", "@/", {
     last_version: { ty: "string", priv: true }
 }, ({ msto }) => {
     const version = GM_info.script.version
@@ -548,13 +543,13 @@ mod.reg("update-log", "¸üĞÂÈÕÖ¾ÏÔÊ¾", "@/", {
     case "==":
         break
     case "<<":
-        lg_alert(`ĞÂ VER ${version}\n` + "¸üĞÂÈÕÖ¾¹¦ÄÜÕıÔÚÎ¬ĞŞÖĞ¡­¡­")
+        lg_alert(`æ–° VER ${version}\n` + "æ›´æ–°æ—¥å¿—åŠŸèƒ½æ­£åœ¨ç»´ä¿®ä¸­â€¦â€¦")
     case ">>":
         msto.last_version = version
     }
 })
 
-mod.reg("emoticon", "±íÇéÊäÈë", [ "@/discuss/lists", "@/discuss/show/.*", "@/discuss/lists?.*", "@/paste" ], {
+mod.reg("emoticon", "è¡¨æƒ…è¾“å…¥", [ "@/discuss/lists", "@/discuss/show/.*", "@/discuss/lists?.*", "@/paste" ], {
     show: { ty: "boolean", dft: true }
 }, ({ msto }) => {
     const emo = [
@@ -587,27 +582,27 @@ mod.reg("emoticon", "±íÇéÊäÈë", [ "@/discuss/lists", "@/discuss/show/.*", "@/dis
         { type: "emo", name: [ "kl" ], slug: "q" },
         { type: "emo", name: [ "yiw" ], slug: "r" },
         { type: "emo", name: [ "dk" ], slug: "s" },
-        { type: "txt", name: [ "hqlm" ], slug: "l0", name_display: "»ğÇ°ÁôÃû" },
-        { type: "txt", name: [ "sqlm" ], slug: "l1", name_display: "É½Ç°ÁôÃû" },
-        { type: "txt", name: [ "xbt" ], slug: "g1", name_display: "Ğ¼±êÌâ" },
-        { type: "txt", name: [ "iee", "wee" ], slug: "g2", name_display: "ÎÒÚÌÚÌ" },
-        { type: "txt", name: [ "kg" ], slug: "g3", name_display: "¿¾¹¾" },
-        { type: "txt", name: [ "gl" ], slug: "g4", name_display: "¸ÇÂ¥" },
-        { type: "txt", name: [ "qwq" ], slug: "g5", name_display: "Q¦ØQ" },
-        { type: "txt", name: [ "wyy" ], slug: "g6", name_display: "ÎŞÒâÒå" },
-        { type: "txt", name: [ "wgzs" ], slug: "g7", name_display: "Î¥¹æ×ÏÉÀ" },
-        { type: "txt", name: [ "tt" ], slug: "g8", name_display: "ÌùÌù" },
-        { type: "txt", name: [ "jbl" ], slug: "g9", name_display: "¾Ù±¨ÁË" },
+        { type: "txt", name: [ "hqlm" ], slug: "l0", name_display: "ç«å‰ç•™å" },
+        { type: "txt", name: [ "sqlm" ], slug: "l1", name_display: "å±±å‰ç•™å" },
+        { type: "txt", name: [ "xbt" ], slug: "g1", name_display: "å±‘æ ‡é¢˜" },
+        { type: "txt", name: [ "iee", "wee" ], slug: "g2", name_display: "æˆ‘è°”è°”" },
+        { type: "txt", name: [ "kg" ], slug: "g3", name_display: "çƒ¤å’•" },
+        { type: "txt", name: [ "gl" ], slug: "g4", name_display: "ç›–æ¥¼" },
+        { type: "txt", name: [ "qwq" ], slug: "g5", name_display: "QÏ‰Q" },
+        { type: "txt", name: [ "wyy" ], slug: "g6", name_display: "æ— æ„ä¹‰" },
+        { type: "txt", name: [ "wgzs" ], slug: "g7", name_display: "è¿è§„ç´«è¡«" },
+        { type: "txt", name: [ "tt" ], slug: "g8", name_display: "è´´è´´" },
+        { type: "txt", name: [ "jbl" ], slug: "g9", name_display: "ä¸¾æŠ¥äº†" },
         { type: "txt", name: [ "%%%", "mmm" ], slug: "ga", name_display: "%%%" },
-        { type: "txt", name: [ "ngrb" ], slug: "gb", name_display: "Äã¹ÈÈÕ±¬" },
-        { type: "txt", name: [ "qpzc", "qp", "zc" ], slug: "gc", name_display: "Ç°ÅÅ×Ê´É" },
-        { type: "txt", name: [ "cmzz" ], slug: "gd", name_display: "³ôÃûÕÑÖø" },
-        { type: "txt", name: [ "zyx" ], slug: "ge", name_display: "ÖÂÔ¶ĞÇ" },
-        { type: "txt", name: [ "zh" ], slug: "gf", name_display: "×£ºÃ" },
+        { type: "txt", name: [ "ngrb" ], slug: "gb", name_display: "ä½ è°·æ—¥çˆ†" },
+        { type: "txt", name: [ "qpzc", "qp", "zc" ], slug: "gc", name_display: "å‰æ’èµ„ç“·" },
+        { type: "txt", name: [ "cmzz" ], slug: "gd", name_display: "è‡­åæ˜­è‘—" },
+        { type: "txt", name: [ "zyx" ], slug: "ge", name_display: "è‡´è¿œæ˜Ÿ" },
+        { type: "txt", name: [ "zh" ], slug: "gf", name_display: "ç¥å¥½" },
         { type: "txt", name: [ "sto" ], slug: "gg", name_display: "sto" },
         { type: "txt", name: [ "orz" ], slug: "gh", name_display: "orz" },
     ]
-    const emo_url = name => `//Í¼.tk/${name}`
+    const emo_url = name => `//å›¾.tk/${name}`
     const $menu = $(".mp-editor-menu"),
         $txt = $(".CodeMirror-wrap textarea")
     $("<br />").appendTo($menu)
@@ -615,10 +610,10 @@ mod.reg("emoticon", "±íÇéÊäÈë", [ "@/discuss/lists", "@/discuss/show/.*", "@/dis
 
     const $ground = $(".mp-editor-ground"), $show_hide = $menu.children().first().clone(true).addClass("exlg-unselectable")
     $menu.children().last().before($show_hide)
-    $show_hide.children()[0].innerHTML = (msto.show) ? "Òş²Ø" : "ÏÔÊ¾"
+    $show_hide.children()[0].innerHTML = (msto.show) ? "éšè—" : "æ˜¾ç¤º"
     if (msto.show) $menu.addClass("exlg-show-emo"), $ground.addClass("exlg-show-emo")
     $show_hide.on("click", () => {
-        $show_hide.children()[0].innerHTML = ["ÏÔÊ¾", "Òş²Ø"][["Òş²Ø", "ÏÔÊ¾"].indexOf($show_hide.children()[0].innerHTML)]
+        $show_hide.children()[0].innerHTML = ["æ˜¾ç¤º", "éšè—"][["éšè—", "æ˜¾ç¤º"].indexOf($show_hide.children()[0].innerHTML)]
         $menu.toggleClass("exlg-show-emo")
         $ground.toggleClass("exlg-show-emo")
         msto.show = ! msto.show
@@ -673,7 +668,7 @@ mod.reg("emoticon", "±íÇéÊäÈë", [ "@/discuss/lists", "@/discuss/show/.*", "@/dis
     }
 `)
 
-mod.reg_user_tab("user-intro-ins", "Ö÷Ò³Ö¸Áî", "main", null, null, () => {
+mod.reg_user_tab("user-intro-ins", "ä¸»é¡µæŒ‡ä»¤", "main", null, null, () => {
     $(".introduction > *").each((_, e, $e = $(e)) => {
         const t = $e.text()
         let [ , , ins, arg ] = t.match(/^(exlg.|%)([a-z]+):([^]+)$/) ?? []
@@ -692,7 +687,7 @@ mod.reg_user_tab("user-intro-ins", "Ö÷Ò³Ö¸Áî", "main", null, null, () => {
             ))
             break
         case "blog":
-            if ($blog.text().trim() !== "¸öÈË²©¿Í") return
+            if ($blog.text().trim() !== "ä¸ªäººåšå®¢") return
             $blog.attr("href", arg)
             $e.remove()
             break
@@ -709,8 +704,8 @@ mod.reg_user_tab("user-intro-ins", "Ö÷Ò³Ö¸Áî", "main", null, null, () => {
 `)
 
 let last_ptr = -1, last_board = "submittedProblems"
-mod.reg_hook_new("user-problem-color", "ÌâÄ¿ÑÕÉ«ÊıÁ¿ºÍ±È½Ï", "@/user/.*", {
-    problem_compare: { ty: "boolean", strict: true, dft: true, info: ["AC compare", "ACÌâÄ¿±È½Ï"] }
+mod.reg_hook_new("user-problem-color", "é¢˜ç›®é¢œè‰²æ•°é‡å’Œæ¯”è¾ƒ", "@/user/.*", {
+    problem_compare: { ty: "boolean", strict: true, dft: true, info: ["AC compare", "ACé¢˜ç›®æ¯”è¾ƒ"] }
 }, ({ msto, args }) => {
     const color = [
         [ 191, 191, 191 ],
@@ -724,11 +719,11 @@ mod.reg_hook_new("user-problem-color", "ÌâÄ¿ÑÕÉ«ÊıÁ¿ºÍ±È½Ï", "@/user/.*", {
     ]
     const _color = id => `rgb(${color[id][0]}, ${color[id][1]}, ${color[id][2]})`
     args.forEach(arg => {
-        if (arg.target.href === "javascript:void 0") return  // Hack: ÕâĞĞ¾ø¶Ô²»ÄÜÉ¾£¡£¡£¡²»ÖªµÀÎªÊ²Ã´¹³×ÓÄÇÀï»á·Å Js void0 ¹ı check
+        if (arg.target.href === "javascript:void 0") return  // Hack: è¿™è¡Œç»å¯¹ä¸èƒ½åˆ ï¼ï¼ï¼ä¸çŸ¥é“ä¸ºä»€ä¹ˆé’©å­é‚£é‡Œä¼šæ”¾ Js void0 è¿‡ check
         // console.log("arg: ",arg.target, arg)
         // if (! uindow._feInjection.currentData[arg.board_id][arg.position])
         arg.target.style.color = _color([uindow._feInjection.currentData[arg.board_id][arg.position].difficulty])
-        if (arg.board_id === "passedProblems" && arg.position === uindow._feInjection.currentData["passedProblems"].length - 1) { // Note: È¾É«È¾µ½×îºóÒ»¸ö
+        if (arg.board_id === "passedProblems" && arg.position === uindow._feInjection.currentData["passedProblems"].length - 1) { // Note: æŸ“è‰²æŸ“åˆ°æœ€åä¸€ä¸ª
             $(".exlg-counter").remove()
             const gf = arg.target.parentNode.parentNode.parentNode.parentNode
             const $prb = [$(gf.firstChild.childNodes[2]), $(gf.lastChild.childNodes[2])]
@@ -753,7 +748,7 @@ mod.reg_hook_new("user-problem-color", "ÌâÄ¿ÑÕÉ«ÊıÁ¿ºÍ±È½Ï", "@/user/.*", {
                     }
                 })
                 $("#exlg-problem-count-1").html(`<span class="exlg-counter" exlg="exlg">${ ta.length } <> ${ my.length } : ${same}`
-                    + `<i class="exlg-icon exlg-info" name="ta µÄ &lt;&gt; ÎÒµÄ : ÏàÍ¬"></i></span>`)
+                    + `<i class="exlg-icon exlg-info" name="ta çš„ &lt;&gt; æˆ‘çš„ : ç›¸åŒ"></i></span>`)
             }
             func()
         }
@@ -779,7 +774,7 @@ mod.reg_hook_new("user-problem-color", "ÌâÄ¿ÑÕÉ«ÊıÁ¿ºÍ±È½Ï", "@/user/.*", {
     }
 `)
 
-mod.reg("benben", "È«Íø Ä Ä", "@/", null, () => {
+mod.reg("benben", "å…¨ç½‘çŠ‡çŠ‡", "@/", null, () => {
     const color = {
         Gray: "gray",
         Blue: "bluelight",
@@ -825,7 +820,7 @@ mod.reg("benben", "È«Íø Ä Ä", "@/", null, () => {
                                     ${ m.user.badge ? `<span class="am-badge am-radius lg-bg-${ color[m.user.color] }">${ m.user.badge }</span>` : "" }
                                 </span>
                                 ${ new Date(m.time * 1000).format("yyyy-mm-dd HH:MM") }
-                                <a name="feed-reply">»Ø¸´</a>
+                                <a name="feed-reply">å›å¤</a>
                             </div>
                         </header>
                         <div class="am-comment-bd">
@@ -851,7 +846,7 @@ mod.reg("benben", "È«Íø Ä Ä", "@/", null, () => {
                 onerror: error
             })
             unsafeWindow.feedPage++
-            $("#feed-more").children("a").text("µã»÷²é¿´¸ü¶à...")
+            $("#feed-more").children("a").text("ç‚¹å‡»æŸ¥çœ‹æ›´å¤š...")
         }
         else{
             oriloadfeed()
@@ -859,7 +854,7 @@ mod.reg("benben", "È«Íø Ä Ä", "@/", null, () => {
     }
 
     const $sel = $(".feed-selector")
-    $(`<li class="feed-selector" id="exlg-benben-selector" data-mode="all-exlg" exlg="exlg"><a style="cursor: pointer">È«Íø¶¯Ì¬</a></li>`)
+    $(`<li class="feed-selector" id="exlg-benben-selector" data-mode="all-exlg" exlg="exlg"><a style="cursor: pointer">å…¨ç½‘åŠ¨æ€</a></li>`)
         .appendTo($sel.parent())
         .on("click", e => {
             const $this = $(e.currentTarget)
@@ -874,7 +869,7 @@ mod.reg("benben", "È«Íø Ä Ä", "@/", null, () => {
         })
 })
 
-mod.reg("rand-problem-ex", "Ëæ»úÌøÌâex", "@/", {
+mod.reg("rand-problem-ex", "éšæœºè·³é¢˜ex", "@/", {
     exrand_difficulty: {
         ty: "tuple",
         lvs: [
@@ -892,32 +887,32 @@ mod.reg("rand-problem-ex", "Ëæ»úÌøÌâex", "@/", {
 }, ({msto}) => {
     const dif_list = [
         {
-            text: "ÈëÃÅ",
+            text: "å…¥é—¨",
             color: "red",
             id: 1
         },
         {
-            text: "ÆÕ¼°-",
+            text: "æ™®åŠ-",
             color: "orange",
             id: 2
         },
         {
-            text: "ÆÕ¼°/Ìá¸ß-",
+            text: "æ™®åŠ/æé«˜-",
             color: "yellow",
             id: 3
         },
         {
-            text: "ÆÕ¼°+/Ìá¸ß",
+            text: "æ™®åŠ+/æé«˜",
             color: "green",
             id: 4
         },
         {
-            text: "Ìá¸ß+/Ê¡Ñ¡-",
+            text: "æé«˜+/çœé€‰-",
             color: "blue",
             id: 5
         },
         {
-            text: "Ê¡Ñ¡/NOI-",
+            text: "çœé€‰/NOI-",
             color: "purple",
             id: 6
         },
@@ -927,14 +922,14 @@ mod.reg("rand-problem-ex", "Ëæ»úÌøÌâex", "@/", {
             id: 7
         },
         {
-            text: "ÔİÎŞÆÀ¶¨",
+            text: "æš‚æ— è¯„å®š",
             color: "gray",
             id: 0
         }
     ]
     const src_list = [
         {
-            text: "Âå¹ÈÌâ¿â",
+            text: "æ´›è°·é¢˜åº“",
             color: "red",
             id: "P"
         },
@@ -960,15 +955,15 @@ mod.reg("rand-problem-ex", "Ëæ»úÌøÌâex", "@/", {
         }
     ]
 
-    const func_jump_problem = (str) => { // Note: Ìø×ªÌâÄ¿
+    const func_jump_problem = (str) => { // Note: è·³è½¬é¢˜ç›®
         if (judge_problem(str)) str = str.toUpperCase()
-        if (str === "" || typeof (str) === "undefined") uindow.show_alert("ÌáÊ¾", "ÇëÊäÈëÌâºÅ")
+        if (str === "" || typeof (str) === "undefined") uindow.show_alert("æç¤º", "è¯·è¾“å…¥é¢˜å·")
         else location.href = "https://www.luogu.com.cn/problemnew/show/" + str
     }
 
     let mouse_on_board = false, mouse_on_dash = false
 
-    // Note: ÖØĞÂ¹¹½¨½çÃæ
+    // Note: é‡æ–°æ„å»ºç•Œé¢
     let $input = $("input[name='toproblem']")
     $input.after($input.clone()).remove()
     $input = $("input[name='toproblem']")
@@ -979,8 +974,8 @@ mod.reg("rand-problem-ex", "Ëæ»úÌøÌâex", "@/", {
 
     const $btn_list = $jump.parent()
 
-    $(".am-btn[name='gotorandom']").text("Ëæ»ú")
-    const $jump_exrand = $(`<button class="am-btn am-btn-success am-btn-sm" name="gotorandomex">Ëæ»úex</button>`).appendTo($btn_list)
+    $(".am-btn[name='gotorandom']").text("éšæœº")
+    const $jump_exrand = $(`<button class="am-btn am-btn-success am-btn-sm" name="gotorandomex">éšæœºex</button>`).appendTo($btn_list)
 
     $jump.on("click", () => {
         if (/^[0-9]+.?[0-9]*$/.test($input.val())) $input.val("P" + $input.val())
@@ -999,9 +994,9 @@ mod.reg("rand-problem-ex", "Ëæ»úÌøÌâex", "@/", {
             mouse_on_board = false
             if (!mouse_on_dash) {
                 $board.hide()
-            } // Hack: Î¬»¤onboard
+            } // Hack: ç»´æŠ¤onboard
         })
-    $(".lg-index-stat>h2").text("ÎÊÌâÌø×ª ").append($(`<div id="exlg-dash-0" class="exlg-rand-settings">exÉèÖÃ</div>`))
+    $(".lg-index-stat>h2").text("é—®é¢˜è·³è½¬ ").append($(`<div id="exlg-dash-0" class="exlg-rand-settings">exè®¾ç½®</div>`))
     const $ul = $board.children("ul").css("list-style-type", "none")
 
     const $exrand_menu = $(`<div id="exlg-exrand-menu"></div>`).appendTo($ul)
@@ -1009,7 +1004,7 @@ mod.reg("rand-problem-ex", "Ëæ»úÌøÌâex", "@/", {
     const $exrand_diff = $(`<div id="exlg-exrand-diff" class="smallbtn-list"></div>`).appendTo($ul)
     const $exrand_srce = $(`<div id="exlg-exrand-srce" class="smallbtn-list"></div>`).appendTo($ul).hide()
 
-    const $entries = $.double((text) => $(`<div class="exlg-rand-settings exlg-unselectable exrand-entry">${text}</div>`).appendTo($exrand_menu), "ÌâÄ¿ÄÑ¶È", "ÌâÄ¿À´Ô´")
+    const $entries = $.double((text) => $(`<div class="exlg-rand-settings exlg-unselectable exrand-entry">${text}</div>`).appendTo($exrand_menu), "é¢˜ç›®éš¾åº¦", "é¢˜ç›®æ¥æº")
     $entries[0].after($(`<span class="exlg-unselectable">&nbsp;&nbsp;</span>`))
     $entries[0].addClass("selected").css("margin-right", "38px")
 
@@ -1026,7 +1021,7 @@ mod.reg("rand-problem-ex", "Ëæ»úÌøÌâex", "@/", {
         const $lists = $.double(([classname, desctext]) => $(`<span class="${classname}">
         <span class="lg-small lg-inline-up exlg-unselectable">${desctext}</span>
         <br>
-        </span>`).appendTo($parent), ["exrand-enabled", "ÒÑÑ¡Ôñ"], ["exrand-disabled", "Î´Ñ¡Ôñ"])
+        </span>`).appendTo($parent), ["exrand-enabled", "å·²é€‰æ‹©"], ["exrand-disabled", "æœªé€‰æ‹©"])
         obj_list.forEach((obj, index) => {
             const $btn = $.double(($p) => $(`<div class="exlg-smallbtn exlg-unselectable">${obj.text}</div>`).css("background-color", `var(--lg-${obj.color}-problem)`).appendTo($p), $lists[0], $lists[1])
             $.double((b) => {
@@ -1049,11 +1044,11 @@ mod.reg("rand-problem-ex", "Ëæ»úÌøÌâex", "@/", {
             $.double(([jqstr, bln]) => {
                 $p.children(jqstr).children(".exlg-smallbtn").each((i, e, $e = $(e)) => (mproxy[i] === bln) ? ($e.show()) : ($e.hide()))
             }, [".exrand-enabled", true], [".exrand-disabled", false])
-        }, [$exrand_diff, msto.exrand_difficulty], [$exrand_srce, msto.exrand_source]) // Hack: ·ÀÖ¹¿ªÁ½¸öÒ³ÃæÏ¹ÍæµÄÇé¿ö
-        $board.show() // Hack: Êó±ê·ÅÔÚdashÉÏ¿ªwindow
+        }, [$exrand_diff, msto.exrand_difficulty], [$exrand_srce, msto.exrand_source]) // Hack: é˜²æ­¢å¼€ä¸¤ä¸ªé¡µé¢çç©çš„æƒ…å†µ
+        $board.show() // Hack: é¼ æ ‡æ”¾åœ¨dashä¸Šå¼€window
     })
         .mouseleave(() => {
-            mouse_on_dash = false // Hack: Àë¿ªdashºÍboard³¬¹ı200msÖ±½Ó¹Øµô
+            mouse_on_dash = false // Hack: ç¦»å¼€dashå’Œboardè¶…è¿‡200msç›´æ¥å…³æ‰
             if (!mouse_on_board) {
                 setTimeout(() => {
                     if (!mouse_on_board) $board.hide()
@@ -1061,7 +1056,7 @@ mod.reg("rand-problem-ex", "Ëæ»úÌøÌâex", "@/", {
             }
         })
 
-    const exrand_poi = async () => { // Note: Òì²½Ğ´·¨£¨ÓÃµ½ÁËlg_content£©
+    const exrand_poi = async () => { // Note: å¼‚æ­¥å†™æ³•ï¼ˆç”¨åˆ°äº†lg_contentï¼‰
         const result = $.double(([l, msto_proxy, _empty]) => {
             let g = []
             l.forEach((e, i) => {
@@ -1142,12 +1137,12 @@ mod.reg("rand-problem-ex", "Ëæ»úÌøÌâex", "@/", {
 }
 `)
 
-mod.reg_hook_new("code-block-ex", "´úÂë¿éÓÅ»¯", "@/.*", {
-    show_code_lang : { ty: "boolean", dft: true, strict: true, info: [ "Show Language Before Codeblocks", "ÏÔÊ¾´úÂë¿éÓïÑÔ" ] },
-    copy_code_position : { ty: "enum", vals: [ "left", "right" ], dft: "left", info: [ "Copy Button Position", "¸´ÖÆ°´Å¥¶ÔÆë·½Ê½" ] },
-    code_block_title : { ty: "string", dft: "Ô´´úÂë - ${lang}", info: [ "Custom Code Title", "×Ô¶¨Òå´úÂë¿é±êÌâ" ] },
-    copy_code_font : { ty: "string", dft: "Fira Code", info: [ "Code Block Font", "´úÂë¿é×ÖÌå" ], strict: true },
-    max_show_lines : { ty: "number", dft: -1, min: -1, max: 100, info: [ "Max Lines On Show", "´úÂë¿é×î´óÏÔÊ¾ĞĞÊı" ], strict: true }
+mod.reg_hook_new("code-block-ex", "ä»£ç å—ä¼˜åŒ–", "@/.*", {
+    show_code_lang : { ty: "boolean", dft: true, strict: true, info: [ "Show Language Before Codeblocks", "æ˜¾ç¤ºä»£ç å—è¯­è¨€" ] },
+    copy_code_position : { ty: "enum", vals: [ "left", "right" ], dft: "left", info: [ "Copy Button Position", "å¤åˆ¶æŒ‰é’®å¯¹é½æ–¹å¼" ] },
+    code_block_title : { ty: "string", dft: "æºä»£ç  - ${lang}", info: [ "Custom Code Title", "è‡ªå®šä¹‰ä»£ç å—æ ‡é¢˜" ] },
+    copy_code_font : { ty: "string", dft: "Fira Code", info: [ "Code Block Font", "ä»£ç å—å­—ä½“" ], strict: true },
+    max_show_lines : { ty: "number", dft: -1, min: -1, max: 100, info: [ "Max Lines On Show", "ä»£ç å—æœ€å¤§æ˜¾ç¤ºè¡Œæ•°" ], strict: true }
 },  ({ msto, args }) => {
 
     const isRecord = /\/record\/.*/.test(location.href)
@@ -1172,11 +1167,11 @@ mod.reg_hook_new("code-block-ex", "´úÂë¿éÓÅ»¯", "@/.*", {
         if (e.parentNode.className === "mp-preview-content") return
         const $btn = isRecord
             ? ($pre.children(".copy-btn"))
-            : $(`<div class="exlg-copy">¸´ÖÆ</div>`)
+            : $(`<div class="exlg-copy">å¤åˆ¶</div>`)
                 .on("click", () => {
-                    if ($btn.text() !== "¸´ÖÆ") return // Note: Debounce
-                    $btn.text("¸´ÖÆ³É¹¦").toggleClass("exlg-copied")
-                    setTimeout(() => $btn.text("¸´ÖÆ").toggleClass("exlg-copied"), 800)
+                    if ($btn.text() !== "å¤åˆ¶") return // Note: Debounce
+                    $btn.text("å¤åˆ¶æˆåŠŸ").toggleClass("exlg-copied")
+                    setTimeout(() => $btn.text("å¤åˆ¶").toggleClass("exlg-copied"), 800)
                     GM_setClipboard($pre.text(), { type: "text", mimetype: "text/plain" })
                 })
 
@@ -1186,7 +1181,7 @@ mod.reg_hook_new("code-block-ex", "´úÂë¿éÓÅ»¯", "@/.*", {
         $btn.addClass(`exlg-copy-${msto.copy_code_position}`)
 
         const lang = get_lang($code)
-        const title_text = ((msto.show_code_lang && lang) ? ( msto.code_block_title.replace("${lang}", lang)) : ("Ô´´úÂë"))
+        const title_text = ((msto.show_code_lang && lang) ? ( msto.code_block_title.replace("${lang}", lang)) : ("æºä»£ç "))
         const $title = isRecord ? $(".lfe-h3").text(title_text) : $(`<h3 class="exlg-code-title" style="width: 100%;">${title_text}</h3>`)
 
         if (! isRecord) $pre.before($title.append($btn))
@@ -1244,16 +1239,16 @@ div.exlg-copied {
 }
 `)
 
-mod.reg_hook_new("rand-training-problem", "Ìâµ¥ÄÚËæ»úÌøÌâ", "@/training/[0-9]+(#.*)?", {
+mod.reg_hook_new("rand-training-problem", "é¢˜å•å†…éšæœºè·³é¢˜", "@/training/[0-9]+(#.*)?", {
     mode: { ty: "enum", vals: ["unac only", "unac and new", "new only"], dft : "unac and new", info: [
-        "Preferences about problem choosing", "Ëæ»úÌøÌâµÄÌâÄ¿ÖÖÀà"
+        "Preferences about problem choosing", "éšæœºè·³é¢˜çš„é¢˜ç›®ç§ç±»"
     ] }
 }, ({ msto, args }) => {
     let ptypes = msto.mode.startsWith("unac") + msto.mode.endsWith("only") * (-1) + 2
-    if (! args.length) return // Hack: ÕâÒ»²½Ã÷Ã÷ result ÒÑ¾­ÊÇ 0 µÄÇé¿öÏÂ»¹°Ñ²ÎÊı´«½øÈ¥ÁËµ¼ÖÂRE£¬¹íÖªµÀÊ²Ã´ bug£¬ÎÒ tmd Ö»ÄÜÕâÃ´¸ãÁË
+    if (! args.length) return // Hack: è¿™ä¸€æ­¥æ˜æ˜ result å·²ç»æ˜¯ 0 çš„æƒ…å†µä¸‹è¿˜æŠŠå‚æ•°ä¼ è¿›å»äº†å¯¼è‡´REï¼Œé¬¼çŸ¥é“ä»€ä¹ˆ bugï¼Œæˆ‘ tmd åªèƒ½è¿™ä¹ˆæäº†
     $(args[0].firstChild).clone(true)
         .appendTo(args)
-        .text("Ëæ»úÌøÌâ")
+        .text("éšæœºè·³é¢˜")
         .addClass("exlg-rand-training-problem-btn")
         .on("click", () => {
             const tInfo = uindow._feInjection.currentData.training
@@ -1269,14 +1264,14 @@ mod.reg_hook_new("rand-training-problem", "Ìâµ¥ÄÚËæ»úÌøÌâ", "@/training/[0-9]+(#
             })
 
             if (!tInfo.problemCount)
-                return lg_alert("Ìâµ¥²»ÄÜÎª¿Õ")
+                return lg_alert("é¢˜å•ä¸èƒ½ä¸ºç©º")
             else if (!candProbList.length) {
                 if (ptypes === 1)
-                    return lg_alert("ÄúÒÑ¾­×öÍêËùÓĞĞÂÌâÀ²£¡")
+                    return lg_alert("æ‚¨å·²ç»åšå®Œæ‰€æœ‰æ–°é¢˜å•¦ï¼")
                 else if (ptypes === 2)
-                    return lg_alert("ÄúÒÑ¾­¶©ÍêËùÓĞ´íÌâÀ²£¡")
+                    return lg_alert("æ‚¨å·²ç»è®¢å®Œæ‰€æœ‰é”™é¢˜å•¦ï¼")
                 else
-                    return lg_alert("ÄúÒÑ¾­ÇĞÍêËùÓĞÌâÀ²£¡")
+                    return lg_alert("æ‚¨å·²ç»åˆ‡å®Œæ‰€æœ‰é¢˜å•¦ï¼")
             }
 
             const pid = ~~ (Math.random() * 1.e6) % candProbList.length
@@ -1292,11 +1287,11 @@ mod.reg_hook_new("rand-training-problem", "Ìâµ¥ÄÚËæ»úÌøÌâ", "@/training/[0-9]+(#
 }
 `)
 
-mod.reg("tasklist-ex", "ÈÎÎñ¼Æ»®ex", "@/", {
-    auto_clear: { ty: "boolean", dft: true, info: ["Hide accepted problems", "Òş²ØÒÑ¾­ AC µÄÌâÄ¿"] },
-    rand_problem_in_tasklist: { ty: "boolean", dft: true, info: ["Random problem in tasklist", "ÈÎÎñ¼Æ»®Ëæ»úÌøÌâ"]}
+mod.reg("tasklist-ex", "ä»»åŠ¡è®¡åˆ’ex", "@/", {
+    auto_clear: { ty: "boolean", dft: true, info: ["Hide accepted problems", "éšè—å·²ç» AC çš„é¢˜ç›®"] },
+    rand_problem_in_tasklist: { ty: "boolean", dft: true, info: ["Random problem in tasklist", "ä»»åŠ¡è®¡åˆ’éšæœºè·³é¢˜"]}
 }, ({ msto }) => {
-    /* const _$board = $("button[name=task-edit]").parent().parent() // Note: Èç¹ûÖ±½Ó$div:has(.tasklist-item) ÄÇÃ´µ±ÈÎÎñ¼Æ»®Îª¿Õ.. */
+    /* const _$board = $("button[name=task-edit]").parent().parent() // Note: å¦‚æœç›´æ¥$div:has(.tasklist-item) é‚£ä¹ˆå½“ä»»åŠ¡è®¡åˆ’ä¸ºç©º.. */
     let actTList = []
     $.each($("div.tasklist-item"), (_, prob, $e = $(prob)) => {
         const pid = $e.attr("data-pid")
@@ -1308,19 +1303,19 @@ mod.reg("tasklist-ex", "ÈÎÎñ¼Æ»®ex", "@/", {
         if ($e.find("i").hasClass("am-icon-check")) $e.addClass("tasklist-ac-problem")
     })
 
-    const $toggle_AC = $(`<div>[<a id="toggle-button">Òş²ØÒÑAC</a>]</div>`)
+    const $toggle_AC = $(`<div>[<a id="toggle-button">éšè—å·²AC</a>]</div>`)
     $("button[name=task-edit]").parent().after($toggle_AC)
 
     const $ac_problem = $(".tasklist-ac-problem")
     const $toggle = $("#toggle-button").on("click", () => {
         $ac_problem.toggle()
-        $toggle.text([ "Òş²Ø", "ÏÔÊ¾" ][ + (msto.auto_clear = ! msto.auto_clear) ] + "ÒÑ AC")
+        $toggle.text([ "éšè—", "æ˜¾ç¤º" ][ + (msto.auto_clear = ! msto.auto_clear) ] + "å·² AC")
     })
 
     if (msto.auto_clear) $toggle.click()
 
     if (msto.rand_problem_in_tasklist) {
-        let $btn = $(`<button name="task-rand" class="am-btn am-btn-sm am-btn-success lg-right">Ëæ»ú</button>`)
+        let $btn = $(`<button name="task-rand" class="am-btn am-btn-sm am-btn-success lg-right">éšæœº</button>`)
         $("button[name='task-edit']").before($btn)
         $btn.addClass("exlg-rand-tasklist-problem-btn")
             .click(() => {
@@ -1334,7 +1329,7 @@ mod.reg("tasklist-ex", "ÈÎÎñ¼Æ»®ex", "@/", {
 }
 `)
 
-mod.reg("dbc-jump", "Ë«»÷ÌâºÅÌøÌâ", "@/.*", null, () => {
+mod.reg("dbc-jump", "åŒå‡»é¢˜å·è·³é¢˜", "@/.*", null, () => {
     $(document).on("dblclick", e => {
         const pid = window.getSelection().toString().trim().toUpperCase()
         const url = e.ctrlkey
@@ -1344,9 +1339,9 @@ mod.reg("dbc-jump", "Ë«»÷ÌâºÅÌøÌâ", "@/.*", null, () => {
     })
 })
 
-mod.reg_hook_new("hide-solution", "Òş²ØÌâ½â", "@/problem/solution/.*", {
-    hidesolu: { ty: "boolean", dft: false, info: ["Hide Solution", "Òş²ØÌâ½â"] }
-}, ({ msto, args }) => (msto.hidesolu) ? (args.hide()) : "memset0çæ°®", (e) => {
+mod.reg_hook_new("hide-solution", "éšè—é¢˜è§£", "@/problem/solution/.*", {
+    hidesolu: { ty: "boolean", dft: false, info: ["Hide Solution", "éšè—é¢˜è§£"] }
+}, ({ msto, args }) => (msto.hidesolu) ? (args.hide()) : "memset0ç‚çˆ±", (e) => {
     if (e.target.className === "item-row") return { result: true, args: $(e.target) }
     return {result: false, args: undefined}
 }, () => $(".item-row"))
@@ -1356,7 +1351,7 @@ mod.reg_hook_new("hide-solution", "Òş²ØÌâ½â", "@/problem/solution/.*", {
 //   difficulty_list: []
 // }
 
-// mod.reg_hook_new("submission-color", "¼ÇÂ¼ÄÑ¶È¿ÉÊÓ»¯", "@/record/list.*", null, () => {
+// mod.reg_hook_new("submission-color", "è®°å½•éš¾åº¦å¯è§†åŒ–", "@/record/list.*", null, () => {
 //     /*
 //     if ($(".exlg-difficulty-color").length) return
 //     const u = uindow._feInjection
@@ -1385,7 +1380,7 @@ mod.reg_hook_new("hide-solution", "Òş²ØÌâ½â", "@/problem/solution/.*", {
 // }
 // )
 
-mod.reg("keyboard-and-cli", "¼üÅÌ²Ù×÷ÓëÃüÁîĞĞ", "@/.*", {
+mod.reg("keyboard-and-cli", "é”®ç›˜æ“ä½œä¸å‘½ä»¤è¡Œ", "@/.*", {
     lang: { ty: "enum", dft: "en", vals: [ "en", "zh" ] }
 }, ({ msto }) => {
     const $cli = $(`<div id="exlg-cli" exlg="exlg"></div>`).appendTo($("body"))
@@ -1409,35 +1404,35 @@ mod.reg("keyboard-and-cli", "¼üÅÌ²Ù×÷ÓëÃüÁîĞĞ", "@/.*", {
     const cli_history = []
     let cli_history_index = 0
     const cli_langs = [ "en", "zh" ], cli_lang_dict = {
-        ".": [ "¡£" ],
-        ",": [ "£¬" ],
-        "!": [ "£¡" ],
-        "?": [ "£¿" ],
-        "cli":        [ "ÃüÁîĞĞ" ],
-        "current":    [ "µ±Ç°" ],
-        "language":   [ "ÓïÑÔ" ],
-        "available":  [ "¿ÉÓÃ" ],
-        "command":    [ "ÃüÁî" ],
-        "commands":   [ "ÃüÁî" ],
-        "unknown":    [ "Î´Öª" ],
-        "forum":      [ "°å¿é" ],
-        "target":     [ "Ä¿±ê" ],
-        "mod":        [ "Ä£¿é" ],
-        "action":     [ "²Ù×÷" ],
-        "illegal":    [ "´íÎó" ],
-        "param":      [ "²ÎÊı" ],
-        "expected":   [ "ÆÚÍû" ],
-        "type":       [ "ÀàĞÍ" ],
-        "lost":       [ "È±Ê§" ],
-        "essential":  [ "±ØÒª" ],
-        "user":       [ "ÓÃ»§" ]
+        ".": [ "ã€‚" ],
+        ",": [ "ï¼Œ" ],
+        "!": [ "ï¼" ],
+        "?": [ "ï¼Ÿ" ],
+        "cli":        [ "å‘½ä»¤è¡Œ" ],
+        "current":    [ "å½“å‰" ],
+        "language":   [ "è¯­è¨€" ],
+        "available":  [ "å¯ç”¨" ],
+        "command":    [ "å‘½ä»¤" ],
+        "commands":   [ "å‘½ä»¤" ],
+        "unknown":    [ "æœªçŸ¥" ],
+        "forum":      [ "æ¿å—" ],
+        "target":     [ "ç›®æ ‡" ],
+        "mod":        [ "æ¨¡å—" ],
+        "action":     [ "æ“ä½œ" ],
+        "illegal":    [ "é”™è¯¯" ],
+        "param":      [ "å‚æ•°" ],
+        "expected":   [ "æœŸæœ›" ],
+        "type":       [ "ç±»å‹" ],
+        "lost":       [ "ç¼ºå¤±" ],
+        "essential":  [ "å¿…è¦" ],
+        "user":       [ "ç”¨æˆ·" ]
     }
     let cli_lang = cli_langs.indexOf(msto.lang) || 0
 
     const cmds = {
         help: (cmd/* string*/) => {
             /* get the help of <cmd>. or list all cmds. */
-            /* »ñÈ¡ <cmd> µÄ°ïÖú¡£¿ÕÔòÁĞ³öËùÓĞ¡£ */
+            /* è·å– <cmd> çš„å¸®åŠ©ã€‚ç©ºåˆ™åˆ—å‡ºæ‰€æœ‰ã€‚ */
             if (! cmd)
                 cli_log`exlg cli. current language: ${cli_lang}, available commands: ${ Object.keys(cmds).join(", ") }`
             else {
@@ -1453,7 +1448,7 @@ mod.reg("keyboard-and-cli", "¼üÅÌ²Ù×÷ÓëÃüÁîĞĞ", "@/.*", {
         },
         cd: (path/* !string*/) => {
             /* jump to <path>, relative path is OK. */
-            /* Ìø×ªÖÁ <path>£¬Ö§³ÖÏà¶ÔÂ·¾¶¡£ */
+            /* è·³è½¬è‡³ <path>ï¼Œæ”¯æŒç›¸å¯¹è·¯å¾„ã€‚ */
             let tar
             if (path[0] === "/") tar = path
             else {
@@ -1470,13 +1465,13 @@ mod.reg("keyboard-and-cli", "¼üÅÌ²Ù×÷ÓëÃüÁîĞĞ", "@/.*", {
         },
         cdd: (forum/* !string*/) => {
             /* jump to the forum named <forum> of discussion. use all the names you can think of. */
-            /* Ìø×ªÖÁÃûÎª <forum> µÄÌÖÂÛ°å¿é£¬ÄãÄÜÏëµ½µÄÃû×Ö»ù±¾¶¼ÓĞÓÃ¡£ */
+            /* è·³è½¬è‡³åä¸º <forum> çš„è®¨è®ºæ¿å—ï¼Œä½ èƒ½æƒ³åˆ°çš„åå­—åŸºæœ¬éƒ½æœ‰ç”¨ã€‚ */
             const tar = [
-                [ "relevantaffairs",    "gs", "gsq",    "¹àË®", "¹àË®Çø",               "r", "ra" ],
-                [ "academics",          "xs", "xsb",    "Ñ§Êõ", "Ñ§Êõ°æ",               "a", "ac" ],
-                [ "siteaffairs",        "zw", "zwb",    "Õ¾Îñ", "Õ¾Îñ°æ",               "s", "sa" ],
-                [ "problem",            "tm", "tmzb",   "ÌâÄ¿", "ÌâÄ¿×Ü°æ",             "p"       ],
-                [ "service",            "fk", "fksqgd", "·´À¡", "·´À¡¡¢ÉêÇë¡¢¹¤µ¥×¨°æ",      "se" ]
+                [ "relevantaffairs",    "gs", "gsq",    "çŒæ°´", "çŒæ°´åŒº",               "r", "ra" ],
+                [ "academics",          "xs", "xsb",    "å­¦æœ¯", "å­¦æœ¯ç‰ˆ",               "a", "ac" ],
+                [ "siteaffairs",        "zw", "zwb",    "ç«™åŠ¡", "ç«™åŠ¡ç‰ˆ",               "s", "sa" ],
+                [ "problem",            "tm", "tmzb",   "é¢˜ç›®", "é¢˜ç›®æ€»ç‰ˆ",             "p"       ],
+                [ "service",            "fk", "fksqgd", "åé¦ˆ", "åé¦ˆã€ç”³è¯·ã€å·¥å•ä¸“ç‰ˆ",      "se" ]
             ]
             forum = tar.find(ns => ns.includes(forum))?.[0]
             if (! tar) return cli_error`cdd: unknown forum "${forum}"`
@@ -1484,7 +1479,7 @@ mod.reg("keyboard-and-cli", "¼üÅÌ²Ù×÷ÓëÃüÁîĞĞ", "@/.*", {
         },
         cc: (name/* char*/) => {
             /* jump to [name], "h|p|c|r|d|i|m|n" stands for home|problem|record|discuss|I myself|message|notification. or jump home. */
-            /* Ìø×ªÖÁ [name]£¬"h|p|c|r|d|i|m|n" ´ú±í£ºÖ÷Ò³|ÌâÄ¿|ÆÀ²â¼ÇÂ¼|ÌÖÂÛ|¸öÈËÖĞĞÄ|Ë½ĞÅ|Í¨Öª¡£¿ÕÔòÌø×ªÖ÷Ò³¡£ */
+            /* è·³è½¬è‡³ [name]ï¼Œ"h|p|c|r|d|i|m|n" ä»£è¡¨ï¼šä¸»é¡µ|é¢˜ç›®|è¯„æµ‹è®°å½•|è®¨è®º|ä¸ªäººä¸­å¿ƒ|ç§ä¿¡|é€šçŸ¥ã€‚ç©ºåˆ™è·³è½¬ä¸»é¡µã€‚ */
             name = name || "h"
             const tar = {
                 h: "/",
@@ -1501,7 +1496,7 @@ mod.reg("keyboard-and-cli", "¼üÅÌ²Ù×÷ÓëÃüÁîĞĞ", "@/.*", {
         },
         mod: (action/* !string*/, name/* string*/) => {
             /* for <action> "enable|disable|toggle", opearte the mod named <name>. */
-            /* µ± <action> Îª "enable|disable|toggle"£¬¶ÔÃûÎª <name> µÄÄ£¿éÖ´ĞĞ¶ÔÓ¦²Ù×÷£ºÆôÓÃ|½ûÓÃ|ÇĞ»»¡£ */
+            /* å½“ <action> ä¸º "enable|disable|toggle"ï¼Œå¯¹åä¸º <name> çš„æ¨¡å—æ‰§è¡Œå¯¹åº”æ“ä½œï¼šå¯ç”¨|ç¦ç”¨|åˆ‡æ¢ã€‚ */
             const i = mod.find_i(name)
             switch (action) {
             case "enable":
@@ -1518,14 +1513,14 @@ mod.reg("keyboard-and-cli", "¼üÅÌ²Ù×÷ÓëÃüÁîĞĞ", "@/.*", {
         },
         dash: (action/* !string*/) => {
             /* for <action> "show|hide|toggle", opearte the exlg dashboard. */
-            /* µ± <action> Îª "show|hide|toggle", ÏÔÊ¾|Òş²Ø|ÇĞ»» exlg ¹ÜÀíÃæ°å¡£ */
+            /* å½“ <action> ä¸º "show|hide|toggle", æ˜¾ç¤º|éšè—|åˆ‡æ¢ exlg ç®¡ç†é¢æ¿ã€‚ */
             if (! [ "show", "hide", "toggle" ].includes(action))
                 return cli_error`dash: unknown action "${action}"`
             $("#exlg-dash-window")[action]()
         },
         lang: (lang/* !string*/) => {
             /* for <lang> "en|zh" switch current cli language. */
-            /* µ± <lang> Îª "en|zh"£¬ÇĞ»»µ±Ç°ÓïÑÔ¡£ */
+            /* å½“ <lang> ä¸º "en|zh"ï¼Œåˆ‡æ¢å½“å‰è¯­è¨€ã€‚ */
             try {
                 msto.lang = lang
                 cli_lang = cli_langs.indexOf(lang)
@@ -1536,12 +1531,12 @@ mod.reg("keyboard-and-cli", "¼üÅÌ²Ù×÷ÓëÃüÁîĞĞ", "@/.*", {
         },
         uid: (uid/* !integer*/) => {
             /* jumps to homepage of user whose uid is <uid>. */
-            /* Ìø×ªÖÁ uid Îª <uid> µÄÓÃ»§Ö÷Ò³¡£ */
+            /* è·³è½¬è‡³ uid ä¸º <uid> çš„ç”¨æˆ·ä¸»é¡µã€‚ */
             location.href = `/user/${uid}`
         },
         un: (name/* !string*/) => {
             /* jumps to homepage of user whose username is like <name>. */
-            /* Ìø×ªÖÁÓÃ»§ÃûÓë <name> ÀàËÆµÄÓÃ»§Ö÷Ò³¡£ */
+            /* è·³è½¬è‡³ç”¨æˆ·åä¸ <name> ç±»ä¼¼çš„ç”¨æˆ·ä¸»é¡µã€‚ */
             $.get("/api/user/search?keyword=" + name, res => {
                 if (! res.users[0])
                     cli_error`un: unknown user "${name}".`
@@ -1654,14 +1649,14 @@ mod.reg("keyboard-and-cli", "¼üÅÌ²Ù×÷ÓëÃüÁîĞĞ", "@/.*", {
 
 // FIXME codeblock-ex
 
-mod.reg_board("search-user", "²éÕÒÓÃ»§Ãû", null, ({ $board }) => {
+mod.reg_board("search-user", "æŸ¥æ‰¾ç”¨æˆ·å", null, ({ $board }) => {
     $board.html(`
-        <h3>²éÕÒÓÃ»§</h3>
+        <h3>æŸ¥æ‰¾ç”¨æˆ·</h3>
         <div class="am-input-group am-input-group-primary am-input-group-sm">
-            <input type="text" class="am-form-field" placeholder="Àı£ºkkksc03£¬¿ÉÌø×ªÕ¾³¤Ö÷Ò³" name="username" id="search-user-input">
+            <input type="text" class="am-form-field" placeholder="ä¾‹ï¼škkksc03ï¼Œå¯è·³è½¬ç«™é•¿ä¸»é¡µ" name="username" id="search-user-input">
         </div>
         <p>
-            <button class="am-btn am-btn-danger am-btn-sm" id="search-user">Ìø×ª</button>
+            <button class="am-btn am-btn-danger am-btn-sm" id="search-user">è·³è½¬</button>
         </p>
     `)
     const func = () => {
@@ -1669,7 +1664,7 @@ mod.reg_board("search-user", "²éÕÒÓÃ»§Ãû", null, ({ $board }) => {
         $.get("/api/user/search?keyword=" + $("[name=username]").val(), res => {
             if (! res.users[0]) {
                 $search_user.prop("disabled", false)
-                lg_alert("ÎŞ·¨ÕÒµ½Ö¸¶¨ÓÃ»§")
+                lg_alert("æ— æ³•æ‰¾åˆ°æŒ‡å®šç”¨æˆ·")
             }
             else location.href = "/user/" + res.users[0].uid
         })
@@ -1678,18 +1673,18 @@ mod.reg_board("search-user", "²éÕÒÓÃ»§Ãû", null, ({ $board }) => {
     $("#search-user-input").keydown(e => { e.key === "Enter" && func() })
 })
 
-mod.reg_board("benben-ranklist", " Ä ÄÁúÍõÅÅĞĞ°ñ",null,({ $board })=>{
+mod.reg_board("benben-ranklist", "çŠ‡çŠ‡é¾™ç‹æ’è¡Œæ¦œ",null,({ $board })=>{
     GM_xmlhttpRequest({
         method: "GET",
         url: `https://bens.rotriw.com/ranklist?_contentOnly=1`,
         onload: function(res) {
-            let s="<h3> Ä ÄÅÅĞĞ°ñ</h3>"
+            let s="<h3>çŠ‡çŠ‡æ’è¡Œæ¦œ</h3>"
             s+="<div>"
             $(JSON.parse(res.response)).each((index, obj) => {
                 s+=`<div class="bb-rnklst-${index + 1}">
                     <span class="bb-rnklst-ind${(index < 9) ? (" bb-top-ten") : ("")}">${index + 1}.</span>
                     <a href="https://bens.rotriw.com/user/${obj[2]}">${obj[1]}</a>
-                    <span style="float: right;">¹² ${obj[0]} Ìõ</span>
+                    <span style="float: right;">å…± ${obj[0]} æ¡</span>
                 </div>`
             })
             s+="</div><br>"
@@ -1714,8 +1709,8 @@ mod.reg_board("benben-ranklist", " Ä ÄÁúÍõÅÅĞĞ°ñ",null,({ $board })=>{
 }
 `)
 
-mod.reg("discussion-save", "ÌÖÂÛ±£´æ", "@/discuss/show/.*", {
-    auto_save_discussion : { ty: "boolean", dft: false, strict: true, info: ["Discussion Auto Save", "×Ô¶¯±£´æÌÖÂÛ"] }
+mod.reg("discussion-save", "è®¨è®ºä¿å­˜", "@/discuss/show/.*", {
+    auto_save_discussion : { ty: "boolean", dft: false, strict: true, info: ["Discussion Auto Save", "è‡ªåŠ¨ä¿å­˜è®¨è®º"] }
 }, ({msto}) => {
     const save_func = () => GM_xmlhttpRequest({
         method: "GET",
@@ -1732,21 +1727,21 @@ mod.reg("discussion-save", "ÌÖÂÛ±£´æ", "@/discuss/show/.*", {
             log(`Error:${err}`)
         }
     })
-    const $btn = $(`<button class="am-btn am-btn-success am-btn-sm" name="save-discuss">±£´æÌÖÂÛ</button>`).on("click", () => {
+    const $btn = $(`<button class="am-btn am-btn-success am-btn-sm" name="save-discuss">ä¿å­˜è®¨è®º</button>`).on("click", () => {
         $btn.prop("disabled", true)
-        $btn.text("±£´æ³É¹¦")
+        $btn.text("ä¿å­˜æˆåŠŸ")
         save_func()
         setTimeout(() => {
             $btn.removeAttr("disabled")
-            $btn.text("±£´æÌÖÂÛ")
+            $btn.text("ä¿å­˜è®¨è®º")
         }, 1000)
     }).css("margin-top", "5px")
-    const $btn2 = $(`<a class="am-btn am-btn-success am-btn-sm" name="save-discuss" style="border-color: rgb(255, 193, 22); background-color: rgb(255, 193, 22);color: #fff;" href="https://luogulo.gq/show.php?url=${location.href}">²é¿´±¸·İ</a>`).css("margin-top", "5px")
+    const $btn2 = $(`<a class="am-btn am-btn-success am-btn-sm" name="save-discuss" style="border-color: rgb(255, 193, 22); background-color: rgb(255, 193, 22);color: #fff;" href="https://luogulo.gq/show.php?url=${location.href}">æŸ¥çœ‹å¤‡ä»½</a>`).css("margin-top", "5px")
     $("section.lg-summary").find("p").append($(`<br>`)).append($btn).append($("<span>&nbsp;</span>")).append($btn2)
     if (msto.auto_save_discussion) save_func()
 })
 
-mod.reg_chore("sponsor-list", "»ñÈ¡±êÇ©ÁĞ±í", "1D", "@/.*", {
+mod.reg_chore("sponsor-list", "è·å–æ ‡ç­¾åˆ—è¡¨", "1D", "@/.*", {
     tag_list: { ty: "string", priv: true }
 }, ({ msto }) => {
     GM_xmlhttpRequest({
@@ -1761,11 +1756,11 @@ mod.reg_chore("sponsor-list", "»ñÈ¡±êÇ©ÁĞ±í", "1D", "@/.*", {
     })
 })
 
-mod.reg_hook_new("sponsor-tag", "±êÇ©ÏÔÊ¾", "@/.*", {
+mod.reg_hook_new("sponsor-tag", "æ ‡ç­¾æ˜¾ç¤º", "@/.*", {
     tag_list: { ty: "string", priv: true }
 }, ({ args }) => {
     const isDiscuss = /\/discuss\/show\/.*/.test(location.href)
-    // $("span.wrapper:has(a[target='_blank'][href]) > span:has(a[target='_blank'][href]):not(.hover):not(.exlg-sponsor-tag)").addClass("exlg-sponsor-tag") // Note: usernavµÄspan´ó¹³¹³
+    // $("span.wrapper:has(a[target='_blank'][href]) > span:has(a[target='_blank'][href]):not(.hover):not(.exlg-sponsor-tag)").addClass("exlg-sponsor-tag") // Note: usernavçš„spanå¤§é’©é’©
     const tag_list = JSON.parse(sto["^sponsor-list"].tag_list)
     const add_badge = ($e) => {
         if (!$e) return
@@ -1782,7 +1777,7 @@ mod.reg_hook_new("sponsor-tag", "±êÇ©ÏÔÊ¾", "@/.*", {
                 if (isDiscuss) { // Note: discuss/show
                     (($e.children(".sb_amazeui").length) ? ($e.children(".sb_amazeui")) : ($e.children("a[target='_blank'][href]"))).after($(`<span class="exlg-badge">${tag}</span>`))
                 }
-                else if ($e[0].tagName === "H2") { // Note: h2´¦ÓĞÒ»µãµãÂé·³
+                else if ($e[0].tagName === "H2") { // Note: h2å¤„æœ‰ä¸€ç‚¹ç‚¹éº»çƒ¦
                     $(`<span class="exlg-badge">${tag}</span>`).appendTo($e.addClass("exlg-sponsor-tag").children(":last-child"))
                 }
                 else $(`<span class="exlg-badge">${tag}</span>`).appendTo($e.addClass("exlg-sponsor-tag"))
@@ -1820,7 +1815,7 @@ mod.reg_hook_new("sponsor-tag", "±êÇ©ÏÔÊ¾", "@/.*", {
 }
 `)
 
-mod.reg("benben-emoticon", " Ä Ä±íÇéÊäÈë", [ "@/" ], {
+mod.reg("benben-emoticon", "çŠ‡çŠ‡è¡¨æƒ…è¾“å…¥", [ "@/" ], {
     show: { ty: "boolean", dft: true }
 }, () => {
     const emo = [
@@ -1853,27 +1848,27 @@ mod.reg("benben-emoticon", " Ä Ä±íÇéÊäÈë", [ "@/" ], {
         { type: "emo", name: [ "kl" ], slug: "q" },
         { type: "emo", name: [ "yiw" ], slug: "r" },
         { type: "emo", name: [ "dk" ], slug: "s" },
-        { type: "txt", name: [ "hqlm" ], slug: "l0", name_display: "»ğÇ°ÁôÃû" },
-        { type: "txt", name: [ "sqlm" ], slug: "l1", name_display: "É½Ç°ÁôÃû" },
-        { type: "txt", name: [ "xbt" ], slug: "g1", name_display: "Ğ¼±êÌâ" },
-        { type: "txt", name: [ "iee", "wee" ], slug: "g2", name_display: "ÎÒÚÌÚÌ" },
-        { type: "txt", name: [ "kg" ], slug: "g3", name_display: "¿¾¹¾" },
-        { type: "txt", name: [ "gl" ], slug: "g4", name_display: "¸ÇÂ¥" },
-        { type: "txt", name: [ "qwq" ], slug: "g5", name_display: "Q¦ØQ" },
-        { type: "txt", name: [ "wyy" ], slug: "g6", name_display: "ÎŞÒâÒå" },
-        { type: "txt", name: [ "wgzs" ], slug: "g7", name_display: "Î¥¹æ×ÏÉÀ" },
-        { type: "txt", name: [ "tt" ], slug: "g8", name_display: "ÌùÌù" },
-        { type: "txt", name: [ "jbl" ], slug: "g9", name_display: "¾Ù±¨ÁË" },
+        { type: "txt", name: [ "hqlm" ], slug: "l0", name_display: "ç«å‰ç•™å" },
+        { type: "txt", name: [ "sqlm" ], slug: "l1", name_display: "å±±å‰ç•™å" },
+        { type: "txt", name: [ "xbt" ], slug: "g1", name_display: "å±‘æ ‡é¢˜" },
+        { type: "txt", name: [ "iee", "wee" ], slug: "g2", name_display: "æˆ‘è°”è°”" },
+        { type: "txt", name: [ "kg" ], slug: "g3", name_display: "çƒ¤å’•" },
+        { type: "txt", name: [ "gl" ], slug: "g4", name_display: "ç›–æ¥¼" },
+        { type: "txt", name: [ "qwq" ], slug: "g5", name_display: "QÏ‰Q" },
+        { type: "txt", name: [ "wyy" ], slug: "g6", name_display: "æ— æ„ä¹‰" },
+        { type: "txt", name: [ "wgzs" ], slug: "g7", name_display: "è¿è§„ç´«è¡«" },
+        { type: "txt", name: [ "tt" ], slug: "g8", name_display: "è´´è´´" },
+        { type: "txt", name: [ "jbl" ], slug: "g9", name_display: "ä¸¾æŠ¥äº†" },
         { type: "txt", name: [ "%%%", "mmm" ], slug: "ga", name_display: "%%%" },
-        { type: "txt", name: [ "ngrb" ], slug: "gb", name_display: "Äã¹ÈÈÕ±¬" },
-        { type: "txt", name: [ "qpzc", "qp", "zc" ], slug: "gc", name_display: "Ç°ÅÅ×Ê´É" },
-        { type: "txt", name: [ "cmzz" ], slug: "gd", name_display: "³ôÃûÕÑÖø" },
-        { type: "txt", name: [ "zyx" ], slug: "ge", name_display: "ÖÂÔ¶ĞÇ" },
-        { type: "txt", name: [ "zh" ], slug: "gf", name_display: "×£ºÃ" },
+        { type: "txt", name: [ "ngrb" ], slug: "gb", name_display: "ä½ è°·æ—¥çˆ†" },
+        { type: "txt", name: [ "qpzc", "qp", "zc" ], slug: "gc", name_display: "å‰æ’èµ„ç“·" },
+        { type: "txt", name: [ "cmzz" ], slug: "gd", name_display: "è‡­åæ˜­è‘—" },
+        { type: "txt", name: [ "zyx" ], slug: "ge", name_display: "è‡´è¿œæ˜Ÿ" },
+        { type: "txt", name: [ "zh" ], slug: "gf", name_display: "ç¥å¥½" },
         { type: "txt", name: [ "sto" ], slug: "gg", name_display: "sto" },
         { type: "txt", name: [ "orz" ], slug: "gh", name_display: "orz" },
     ]
-    const $txt = $("#feed-content"), emo_url = name => `//Í¼.tk/${name}`, txt = $txt[0]
+    const $txt = $("#feed-content"), emo_url = name => `//å›¾.tk/${name}`, txt = $txt[0]
     $("#feed-content").before("<div id='emo-lst'></div>")
     emo.forEach(m => {
         $((m.type === "emo")?
@@ -1914,7 +1909,7 @@ mod.reg("benben-emoticon", " Ä Ä±íÇéÊäÈë", [ "@/" ], {
 }
 `)
 
-mod.reg("user-css", "×Ô¶¨ÒåÑùÊ½±í", ".*", {
+mod.reg("user-css", "è‡ªå®šä¹‰æ ·å¼è¡¨", ".*", {
     css: { ty: "string" }
 }, ({ msto }) => GM_addStyle(msto.css)
 )
@@ -1954,12 +1949,12 @@ $(() => {
         }
         catch(err) {
             if (chance) {
-                lg_alert("´æ´¢´úÀí¼ÓÔØÊ§°Ü£¬Çå´æÖØÊÔÖĞ¡­¡­")
+                lg_alert("å­˜å‚¨ä»£ç†åŠ è½½å¤±è´¥ï¼Œæ¸…å­˜é‡è¯•ä¸­â€¦â€¦")
                 clear_dat()
                 init_sto(chance - 1)
             }
             else {
-                lg_alert("Ê§°Ü´ÎÊı¹ı¶à£¬×Ô±ÕÖĞ¡£ÕâÀï½¨ÒéÁªÏµ¿ª·¢ÈËÔ±ÄØ¡£")
+                lg_alert("å¤±è´¥æ¬¡æ•°è¿‡å¤šï¼Œè‡ªé—­ä¸­ã€‚è¿™é‡Œå»ºè®®è”ç³»å¼€å‘äººå‘˜å‘¢ã€‚")
                 throw err
             }
         }
@@ -1969,5 +1964,4 @@ $(() => {
     log("Launching")
     mod.execute()
 })
-
 
