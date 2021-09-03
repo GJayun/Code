@@ -1141,7 +1141,7 @@ mod.reg_hook_new("code-block-ex", "代码块优化", "@/.*", {
     show_code_lang : { ty: "boolean", dft: true, strict: true, info: [ "Show Language Before Codeblocks", "显示代码块语言" ] },
     copy_code_position : { ty: "enum", vals: [ "left", "right" ], dft: "left", info: [ "Copy Button Position", "复制按钮对齐方式" ] },
     code_block_title : { ty: "string", dft: "源代码 - ${lang}", info: [ "Custom Code Title", "自定义代码块标题" ] },
-    copy_code_font : { ty: "string", dft: "Fira Code", info: [ "Code Block Font", "代码块字体" ], strict: true },
+    copy_code_font : { ty: "string", dft: "Consolas", info: [ "Code Block Font", "代码块字体" ], strict: true },
     max_show_lines : { ty: "number", dft: -1, min: -1, max: 100, info: [ "Max Lines On Show", "代码块最大显示行数" ], strict: true }
 },  ({ msto, args }) => {
 
