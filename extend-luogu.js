@@ -640,7 +640,7 @@ mod.reg("emoticon", "表情输入", [ "@/discuss/lists", "@/discuss/show/.*", "@
     })
 }, `
     .mp-editor-ground.exlg-ext.exlg-show-emo {
-        top: 12em !important;
+        top: 10em !important;
     }
     .mp-editor-menu > br ~ li {
         position: relative;
@@ -649,7 +649,7 @@ mod.reg("emoticon", "表情输入", [ "@/discuss/lists", "@/discuss/show/.*", "@
         padding: 5px 1px;
     }
     .mp-editor-menu.exlg-show-emo {
-        height: 12em !important;
+        height: 10em !important;
         overflow: auto;
     }
     .exlg-emo-btn {
