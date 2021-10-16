@@ -549,7 +549,7 @@ mod.reg("update-log", "更新日志显示", "@/", {
     }
 })
 
-mod.reg("emoticon", "表情输入", [ "@/discuss/lists", "@/discuss/show/.*", "@/discuss/lists?.*", "@/paste" ], {
+mod.reg("emoticon", "表情输入", [ "@/discuss/lists", "@/discuss/show/.*", "@/discuss/lists?.*", "@/paste", "@/discuss/.*" ], {
     show: { ty: "boolean", dft: true }
 }, ({ msto }) => {
     const emo = [
@@ -640,7 +640,7 @@ mod.reg("emoticon", "表情输入", [ "@/discuss/lists", "@/discuss/show/.*", "@
     })
 }, `
     .mp-editor-ground.exlg-ext.exlg-show-emo {
-        top: 10em !important;
+        top: 12em !important;
     }
     .mp-editor-menu > br ~ li {
         position: relative;
@@ -649,7 +649,7 @@ mod.reg("emoticon", "表情输入", [ "@/discuss/lists", "@/discuss/show/.*", "@
         padding: 5px 1px;
     }
     .mp-editor-menu.exlg-show-emo {
-        height: 10em !important;
+        height: 12em !important;
         overflow: auto;
     }
     .exlg-emo-btn {
