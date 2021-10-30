@@ -1386,39 +1386,24 @@ mod.reg("hide-solution", "隐藏题解", "@/problem/solution/.*", {
     hidesolu: { ty: "boolean", dft: false, info: ["Hide Solution", "隐藏题解"] }
 }, ({ msto }) => (msto.hidesolu) ? (GM_addStyle(".item-row { display: none; }")) : "memset0珂爱")
 
-// let submission_color_tmp = {
-//   complete: true,
-//   difficulty_list: []
-// }
-
-// mod.reg_hook_new("submission-color", "记录难度可视化", "@/record/list.*", null, () => {
-//     /*
-//     if ($(".exlg-difficulty-color").length) return
-//     const u = uindow._feInjection
-//     const dif = u.currentData.records.result.map((u) => u.problem.difficulty)
-//     $("div.problem > div > a > span.pid").each((i, e, $e = $(e)) => {
-//         $e.addClass("exlg-difficulty-color").addClass(`color-${dif[i]}`)
-//     })
-//     //* /
-//     const dif = (pid) => {
-//     }
-// }, (e) => {
-//     if ()
-//
-// const lg_content = url => new Promise((res, rej) =>
-//    $.get(url + (url.includes("?") ? "&" : "?") + "_contentOnly=1", data => {
-//         if (data.code !== 200) rej(`Requesting failure code: ${ res.code }.`)
-//         res(data)
-//     })
-// )
-//
-//
-//
-//
-//
-//     return $("div.problem > div > a > span.pid").length && ! $(".exlg-difficulty-color").length
-// }
-// )
+mod.reg_hook_new("submission-color", "记录难度可视化", "@/record/list.*", null, () => {
+        if ($(".exlg-difficulty-color").length) return
+        const u = uindow._feInjection
+        const dif = u.currentData.records.result.map((u) => u.problem.difficulty)
+        console.log("%s", u.currentData.records.result[0].problem.pid)
+        $("div.problem > div > a > span.pid").each((i, e, $e = $(e)) => {
+            $e.addClass("exlg-difficulty-color").addClass(`color-${dif[i]}`)
+        })
+    }, (e) => {
+        const lg_content = url => new Promise((res, rej) =>
+        $.get(url + (url.includes("?") ? "&" : "?") + "_contentOnly=1", data => {
+                if (data.code !== 200) rej(`Requesting failure code: ${ res.code }.`)
+                res(data)
+            })
+        )
+        return $("div.problem > div > a > span.pid").length && ! $(".exlg-difficulty-color").length
+    }, () => [], ``
+)
 
 mod.reg("keyboard-and-cli", "键盘操作与命令行", "@/.*", {
     lang: { ty: "enum", dft: "en", vals: [ "en", "zh" ] }
@@ -2035,4 +2020,3 @@ $(() => {
     log("Launching")
     mod.execute()
 })
-
