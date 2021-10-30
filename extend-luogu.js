@@ -331,17 +331,7 @@ mod.reg_hook_new("dash-bridge", "控制桥", "@/.*", {
     }
 }, ({ msto, args }) => {
     const source = msto.source
-    $(`<div id="exlg-dash" exlg="exlg"><svg data-v-78704ac9="" data-v-303bbf52="" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="lock" role="img" xmlns="http://www.w3.org/2000/svg" class="svg-inline--fa fa-cog fa-w-14"><image id="image0" width="14.39" height="14.39" x="0" y="0" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAMAAABFNRROAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
-AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAvVBMVEX////39/jv8PH19vb+
-/v74+fmnrLFsdX2coqj5+fn9/f25vcFyeoKkqa6BiI95gYhzfIOxtbr8/PyRmJ6CipDu7/DY2txx
-eYGBiZCiqK2LkpjEx8rz9PWQl53x8fL5+vqSmZ+Lkpnp6ux9hYyrsLV1fYXf4ePIzM+NlJp3f4fe
-4OHr7e6Ij5W6vsL09fVud39weYF8hIu1ur729/d6g4ro6evf4eKJkZfU19mGjZTa3N6OlZvMz9K2
-u7+fpar/D5nhAAAAAWJLR0QAiAUdSAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAAd0SU1FB+UIGA8C
-L707DMYAAACESURBVAjXZY7HEoJAEAWfuPoMCwYwB8SEWcwB5P8/i12Fk32aqenqGkCTM/JIEQUU
-WRLlynepStNizaw3mtqy+cNp6WO7w26vTw7UPBxJOmO4E0pvCmNGlQDm5GIJ119xvcHW4m5/UK5/
-ZHAKyLMycPHS5vWmm/fH0+brHUbZOx/GAn8k5GQJi5PvrVEAAAAldEVYdGRhdGU6Y3JlYXRlADIw
-MjEtMDgtMjRUMTU6MDI6NDcrMDM6MDDFld41AAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA4LTI0
-VDE1OjAyOjQ3KzAzOjAwtMhmiQAAAABJRU5ErkJggg=="></image></svg> 设置</div>|
+    $(`<div id="exlg-dash" exlg="exlg"><svg data-v-78704ac9="" data-v-303bbf52="" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user-cog" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="svg-inline--fa fa-cog fa-w-14"><path data-v-78704ac9="" data-v-303bbf52="" fill="currentColor" d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z" class=""></path></svg> 设置</div>|
      </>`)
         .prependTo(args)
         .on("click", () => uindow.exlg.dash = uindow.open({
