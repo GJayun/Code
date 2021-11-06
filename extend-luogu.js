@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           Jayun's Exluogu
+// @name           Jayun's ExLuogu
 // @namespace      http://tampermonkey.net/
 // @version        2.11.11
 //
