@@ -912,6 +912,29 @@ mod.reg("benben", "全网犇犇", "@/", {
         })
 })
 
+
+mod.reg("rand-footprint", "随机足迹", "@/", null, ({msto}) => {
+    let $board = $("<div class='am-u-md-4' name='exlg-rand-board'></div>");
+    $board.html(`
+        <div class='lg-article exlg-index-stat'>
+            <h2>足迹</h2>
+            <div class="am-input-group am-input-group-primary am-input-group-sm">
+                <input type="text" class="am-form-field" placeholder="例：kkksc03，随机跳转到站长通过的题目" name="username" id="search-user-passed" style="width: 278px;">
+            </div>
+            <p>
+                <button class="am-btn am-btn-danger am-btn-sm" id="add-user">添加用户</button>
+                <button class="am-btn am-btn-primary am-btn-sm" id="remove-user">移除用户</button>
+                <button class="am-btn am-btn-success am-btn-sm" id="goto-users-passed">跳转题目</button>
+            </p>
+        </div>
+    `);
+    $("div.am-u-md-3").after($board);
+}, `
+.exlg-index-stat{
+    height: 190px;
+}
+`)
+
 mod.reg("rand-problem-ex", "随机跳题ex", "@/", {
     exrand_difficulty: {
         ty: "tuple",
@@ -1403,7 +1426,7 @@ mod.reg_hook_new("submission-color", "记录难度可视化", "@/record/list.*",
     if(!uindow.location.href.match("www.luogu.com.cn/record/list.*")) return {result: false}
     let now_page = uindow.location.href.slice(37);
     if (now_page !== lst_page) {lst_page = now_page; return {result: !$("div.problem > div > a > span.pid").hasClass("exlg-difficulty-color")};}
-    
+
 }, () => [], ``
 )
 
