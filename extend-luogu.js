@@ -1386,23 +1386,25 @@ mod.reg("hide-solution", "隐藏题解", "@/problem/solution/.*", {
     hidesolu: { ty: "boolean", dft: false, info: ["Hide Solution", "隐藏题解"] }
 }, ({ msto }) => (msto.hidesolu) ? (GM_addStyle(".item-row { display: none; }")) : "memset0珂爱")
 
+let lst_page = -1
 mod.reg_hook_new("submission-color", "记录难度可视化", "@/record/list.*", null, () => {
-        if ($(".exlg-difficulty-color").length) return
-        const u = uindow._feInjection
+    const func = async() => {
+        if ($(".exlg-difficulty-color").length) return;
+        let u = await lg_content(uindow.location.href)
         const dif = u.currentData.records.result.map((u) => u.problem.difficulty)
-        console.log("%s", u.currentData.records.result[0].problem.pid)
         $("div.problem > div > a > span.pid").each((i, e, $e = $(e)) => {
-            $e.addClass("exlg-difficulty-color").addClass(`color-${dif[i]}`)
+            // console.log(u.currentData.records.result[i].problem.pid, i)
+            $e.removeClass();
+            $e.addClass("pid").addClass("exlg-difficulty-color").addClass(`color-${dif[i]}`)
         })
-    }, (e) => {
-        const lg_content = url => new Promise((res, rej) =>
-        $.get(url + (url.includes("?") ? "&" : "?") + "_contentOnly=1", data => {
-                if (data.code !== 200) rej(`Requesting failure code: ${ res.code }.`)
-                res(data)
-            })
-        )
-        return $("div.problem > div > a > span.pid").length && ! $(".exlg-difficulty-color").length
-    }, () => [], ``
+    }
+    func()
+}, (e) => {
+    if(!uindow.location.href.match("www.luogu.com.cn/record/list.*")) return {result: false}
+    let now_page = uindow.location.href.slice(37);
+    if (now_page !== lst_page) {lst_page = now_page; return {result: !$("div.problem > div > a > span.pid").hasClass("exlg-difficulty-color")};}
+    
+}, () => [], ``
 )
 
 mod.reg("keyboard-and-cli", "键盘操作与命令行", "@/.*", {
