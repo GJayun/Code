@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Jayun's Exluogu
 // @namespace      http://tampermonkey.net/
-// @version        2.11.10
+// @version        2.11.11
 //
 // @match          https://*.luogu.com.cn/*
 // @match          https://*.luogu.org/*
