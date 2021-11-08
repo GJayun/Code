@@ -979,36 +979,12 @@ mod.reg("rand-footprint", "随机足迹", "@/", null, ({msto}) => {
             }
         })
     }
-    const rand_jump = async () => {
-        if (usersname.length == 0) { lg_alert("您还未选择用户"); return; }
-        let useruid = usersname[Math.floor(Math.random() * usersname.length)], flag = 1;
-        for (let i = 0; i < usersname.length; i++)
-        {
-            let res = await lg_content(`/user/${usersname[i]}`);
-            let pbnum = res.currentData.user.passedProblemCount;
-            if (pbnum != 0 && typeof res.currentData.passedProblems != "undefined")
-            {
-                flag = 0;
-                break;
-            }
-        }
-        if (flag) { lg_alert("这些用户都开了完全隐私保护或还未通过题目"); return; }
-        let res = await lg_content(`/user/${useruid}`);
-        let pbnum = res.currentData.user.passedProblemCount;
-        while (pbnum == 0 || typeof res.currentData.passedProblems == "undefined")
-        {
-            useruid = usersname[Math.floor(Math.random() * usersname.length)];
-            res = await lg_content(`/user/${useruid}`);
-            pbnum = res.currentData.user.passedProblemCount;
-        }
-        location.href = `/problem/${res.currentData.passedProblems[Math.floor(Math.random() * pbnum)].pid}`;
+    const rand_jump = () => {
     }
-
     const $adduser = $("#add-user").on("click", add), $removeuser = $("#remove-user").on("click", rem);
     $("#empty-user").on("click", () => {
         usn.length = usersname.length = 0; writename();
     })
-    $("#goto-users-passed").on("click", rand_jump);
     $("#search-user-passed").keydown(e => { e.key === "Enter" && add() })
 }, `
 .exlg-index-stat{
