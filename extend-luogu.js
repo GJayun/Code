@@ -473,6 +473,8 @@ mod.reg_hook_new("dash-bridge", "控制桥", "@/.*", {
     .exlg-difficulty-color.color-5 { color: rgb(52, 152, 219)!important; }
     .exlg-difficulty-color.color-6 { color: rgb(157, 61, 207)!important; }
     .exlg-difficulty-color.color-7 { color: rgb(14, 29, 105)!important; }
+
+    button { margin-bottom: 3px !important; }
 `)
 
 mod.reg_main("dash-board", "控制面板", mod.path_dash_board, {
@@ -925,8 +927,8 @@ mod.reg("rand-footprint", "随机足迹", "@/", null, ({msto}) => {
             <p>
                 <button class="am-btn am-btn-danger am-btn-sm" id="add-user">添加</button>
                 <button class="am-btn am-btn-primary am-btn-sm" id="remove-user">移除</button>
-                <button class="am-btn am-btn-group am-btn-sm" id="empty-user">一键清空</button>
                 <button class="am-btn am-btn-success am-btn-sm" id="goto-users-passed">跳转</button>
+                <button class="am-btn am-btn-warning am-btn-sm" id="empty-user">一键清空</button>
             </p>
         </div>
     `);
@@ -945,7 +947,7 @@ mod.reg("rand-footprint", "随机足迹", "@/", null, ({msto}) => {
             $(`<p>@<a href="/user/${usersname[i]}">${usn[usersname[i]]}</a></p>`).appendTo(".exlg-editor");
         }
     }
-    const func = () => {
+    const add = () => {
         $adduser.prop("disabled", true)
         $.get("/api/user/search?keyword=" + $("[name=username-passed]").val(), res => {
             if (! res.users[0]) {
@@ -960,16 +962,15 @@ mod.reg("rand-footprint", "随机足迹", "@/", null, ({msto}) => {
             }
         })
     }
-    const func2 = () => {
+    const rem = () => {
         $removeuser.prop("disabled", true)
         $.get("/api/user/search?keyword=" + $("[name=username-passed]").val(), res => {
-            if (! res.users[0]) {
+            if (!res.users[0]) {
                 $removeuser.prop("disabled", false)
                 lg_alert("无法找到指定用户")
             }
             else {
                 let usern = res.users[0].uid;
-                usn[usern].empty();
                 usersname = usersname.filter(function(item) {
                     return item != usern
                 });
@@ -978,11 +979,37 @@ mod.reg("rand-footprint", "随机足迹", "@/", null, ({msto}) => {
             }
         })
     }
-    const $adduser = $("#add-user").on("click", func), $removeuser = $("#remove-user").on("click", func2);
+    const rand_jump = async () => {
+        if (usersname.length == 0) { lg_alert("您还未选择用户"); return; }
+        let useruid = usersname[Math.floor(Math.random() * usersname.length)], flag = 1;
+        for (let i = 0; i < usersname.length; i++)
+        {
+            let res = await lg_content(`/user/${usersname[i]}`);
+            let pbnum = res.currentData.user.passedProblemCount;
+            if (pbnum != 0 && typeof res.currentData.passedProblems != "undefined")
+            {
+                flag = 0;
+                break;
+            }
+        }
+        if (flag) { lg_alert("这些用户都开了完全隐私保护或还未通过题目"); return; }
+        let res = await lg_content(`/user/${useruid}`);
+        let pbnum = res.currentData.user.passedProblemCount;
+        while (pbnum == 0 || typeof res.currentData.passedProblems == "undefined")
+        {
+            useruid = usersname[Math.floor(Math.random() * usersname.length)];
+            res = await lg_content(`/user/${useruid}`);
+            pbnum = res.currentData.user.passedProblemCount;
+        }
+        location.href = `/problem/${res.currentData.passedProblems[Math.floor(Math.random() * pbnum)].pid}`;
+    }
+
+    const $adduser = $("#add-user").on("click", add), $removeuser = $("#remove-user").on("click", rem);
     $("#empty-user").on("click", () => {
         usn.length = usersname.length = 0; writename();
     })
-    $("#search-user-passed").keydown(e => { e.key === "Enter" && func() })
+    $("#goto-users-passed").on("click", rand_jump);
+    $("#search-user-passed").keydown(e => { e.key === "Enter" && add() })
 }, `
 .exlg-index-stat{
     height: 190px;
