@@ -915,8 +915,23 @@ mod.reg("benben", "全网犇犇", "@/", {
 })
 
 
-let usersname = [], usn = [];
-mod.reg("rand-footprint", "随机足迹", "@/", null, ({msto}) => {
+mod.reg("rand-footprint", "随机足迹", "@/", {
+    total: { ty: "number" },
+    Usersname: {
+        ty: "tuple",
+        lvs: [
+            { ty: "string", dft: false, strict: true, repeat: 50 }
+        ],
+        priv: true
+    },
+    Usn: {
+        ty: "tuple",
+        lvs: [
+            { ty: "string", dft: false, strict: true, repeat: 50 }
+        ],
+        priv: true
+    }
+}, ({msto}) => {
     let $board = $("<div class='am-u-md-3' name='exlg-rand-board'></div>");
     $board.html(`
         <div class='lg-article exlg-index-stat'>
@@ -927,8 +942,10 @@ mod.reg("rand-footprint", "随机足迹", "@/", null, ({msto}) => {
             <p>
                 <button class="am-btn am-btn-danger am-btn-sm" id="add-user">添加</button>
                 <button class="am-btn am-btn-primary am-btn-sm" id="remove-user">移除</button>
+                <button class="am-btn am-btn-group am-btn-sm" id="empty-user">一键清空</button>
                 <button class="am-btn am-btn-success am-btn-sm" id="goto-users-passed">跳转</button>
-                <button class="am-btn am-btn-warning am-btn-sm" id="empty-user">一键清空</button>
+                <input type="checkbox" checked="true" id="check-ac">
+                包括已 AC 题目
             </p>
         </div>
     `);
@@ -942,13 +959,24 @@ mod.reg("rand-footprint", "随机足迹", "@/", null, ({msto}) => {
     $board.after($nameboard);
     const writename = () => {
         $(".exlg-editor").empty();
-        for (let i = 0; i < usersname.length; i++)
+        for (let i = 0; i < msto.total; i++)
         {
-            $(`<p>@<a href="/user/${usersname[i]}">${usn[usersname[i]]}</a></p>`).appendTo(".exlg-editor");
+            $(`<p>@<a href="/user/${msto.Usersname[i]}">${msto.Usn[i]}</a></p>`).appendTo(".exlg-editor");
         }
+    }
+    writename();
+    function isIndexOf (arr1, id) {
+        for (let i = 0; i < msto.total; i++)
+            if(arr1[i] === id) return true;
+        return false;
     }
     const add = () => {
         $adduser.prop("disabled", true)
+        if (msto.total >= 50)
+        {
+            $adduser.prop("disabled", false)
+            lg_alert("请不要超过 50 人哦")
+        }
         $.get("/api/user/search?keyword=" + $("[name=username-passed]").val(), res => {
             if (! res.users[0]) {
                 $adduser.prop("disabled", false)
@@ -956,7 +984,7 @@ mod.reg("rand-footprint", "随机足迹", "@/", null, ({msto}) => {
             }
             else {
                 let usern = res.users[0].uid;
-                if (usersname.indexOf(usern) == -1) usersname.push(usern), usn[usern] = res.users[0].name;
+                if (!isIndexOf(msto.Usersname, `${usern}`)) msto.Usersname[msto.total] = `${usern}`, msto.Usn[msto.total++] = res.users[0].name;
                 writename();
                 $adduser.prop("disabled", false)
             }
@@ -971,20 +999,70 @@ mod.reg("rand-footprint", "随机足迹", "@/", null, ({msto}) => {
             }
             else {
                 let usern = res.users[0].uid;
-                usersname = usersname.filter(function(item) {
-                    return item != usern
-                });
+                for (let i = 0, flag = 0; i < msto.total; i++)
+                {
+                    if (msto.Usersname[i] === `${usern}`) flag = 1;
+                    if (flag)
+                    {
+                        msto.Usn[i] = msto.Usn[i + 1];
+                        msto.Usersname[i] = msto.Usersname[i + 1];
+                    }
+                }
+                msto.total--;
                 writename();
                 $removeuser.prop("disabled", false)
             }
         })
     }
-    const rand_jump = () => {
+    function  isIntersect(arr1, arr2) {
+        let newarr = arr1.filter( x => {
+			return arr2.some( y => {
+				return x.pid == y.pid;
+			})
+		});
+        return arr1.length >= arr2.length;
     }
+    function isInclude(arr1, pid)
+    {
+        var newArr = arr1.filter(function(p){
+            return p.pid === pid;
+        });
+        return newArr.length != 0;
+    }
+    const rand_jump = async () => {
+        let isAC = $("#check-ac").get(0).checked;
+        if (msto.total == 0) { lg_alert("您还未选择用户"); return; }
+        let useruid = msto.Usersname[Math.floor(Math.random() * msto.total)];
+        let myres = await lg_content(`/user/${uindow._feInjection.currentUser.uid}`);
+        let Canuser = [];
+        for (let i = 0; i < msto.total; i++)
+        {
+            let res = await lg_content(`/user/${msto.Usersname[i]}`);
+            let pbnum = res.currentData.user.passedProblemCount;
+            if (pbnum != 0 && typeof res.currentData.passedProblems != "undefined")
+            {
+                if (isAC || !isIntersect(myres.currentData.passedProblems, res.currentData.passedProblems))Canuser.push(msto.Usersname[i]);
+            }
+        }
+        if (Canuser.length == 0) { lg_alert("这些用户都开了完全隐私保护或还未通过题目或只做了您所做过的题目"); return; }
+        let res = await lg_content(`/user/${useruid}`);
+        let pbnum = res.currentData.user.passedProblemCount;
+        while (pbnum == 0 || typeof res.currentData.passedProblems == "undefined" || (!isAC && isIntersect(myres.currentData.passedProblems, res.currentData.passedProblems)))
+        {
+            useruid = msto.Usersname[Math.floor(Math.random() * msto.total)];
+            res = await lg_content(`/user/${useruid}`);
+            pbnum = res.currentData.user.passedProblemCount;
+        }
+        let Pro = res.currentData.passedProblems[Math.floor(Math.random() * pbnum)].pid;
+        while (!isAC && isInclude(myres.currentData.passedProblems, Pro)) {Pro = res.currentData.passedProblems[Math.floor(Math.random() * pbnum)].pid;}
+        location.href = `/problem/${Pro}`;
+    }
+
     const $adduser = $("#add-user").on("click", add), $removeuser = $("#remove-user").on("click", rem);
     $("#empty-user").on("click", () => {
-        usn.length = usersname.length = 0; writename();
+        msto.total = 0; writename();
     })
+    $("#goto-users-passed").on("click", rand_jump);
     $("#search-user-passed").keydown(e => { e.key === "Enter" && add() })
 }, `
 .exlg-index-stat{
