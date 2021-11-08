@@ -913,25 +913,85 @@ mod.reg("benben", "全网犇犇", "@/", {
 })
 
 
+let usersname = [], usn = [];
 mod.reg("rand-footprint", "随机足迹", "@/", null, ({msto}) => {
-    let $board = $("<div class='am-u-md-4' name='exlg-rand-board'></div>");
+    let $board = $("<div class='am-u-md-3' name='exlg-rand-board'></div>");
     $board.html(`
         <div class='lg-article exlg-index-stat'>
             <h2>足迹</h2>
             <div class="am-input-group am-input-group-primary am-input-group-sm">
-                <input type="text" class="am-form-field" placeholder="例：kkksc03，随机跳转到站长通过的题目" name="username" id="search-user-passed" style="width: 278px;">
+                <input type="text" class="am-form-field" placeholder="随机跳转用户通过的题目" name="username-passed" id="search-user-passed">
             </div>
             <p>
-                <button class="am-btn am-btn-danger am-btn-sm" id="add-user">添加用户</button>
-                <button class="am-btn am-btn-primary am-btn-sm" id="remove-user">移除用户</button>
-                <button class="am-btn am-btn-success am-btn-sm" id="goto-users-passed">跳转题目</button>
+                <button class="am-btn am-btn-danger am-btn-sm" id="add-user">添加</button>
+                <button class="am-btn am-btn-primary am-btn-sm" id="remove-user">移除</button>
+                <button class="am-btn am-btn-group am-btn-sm" id="empty-user">一键清空</button>
+                <button class="am-btn am-btn-success am-btn-sm" id="goto-users-passed">跳转</button>
             </p>
         </div>
     `);
     $("div.am-u-md-3").after($board);
+    let $nameboard = $(`
+        <div class="am-u-md-2" id="exlg-rand-nameboard">
+            <div class="lg-article exlg-index-stat exlg-editor">
+            </div>
+        </div>
+    `);
+    $board.after($nameboard);
+    const writename = () => {
+        $(".exlg-editor").empty();
+        for (let i = 0; i < usersname.length; i++)
+        {
+            $(`<p>@<a href="/user/${usersname[i]}">${usn[usersname[i]]}</a></p>`).appendTo(".exlg-editor");
+        }
+    }
+    const func = () => {
+        $adduser.prop("disabled", true)
+        $.get("/api/user/search?keyword=" + $("[name=username-passed]").val(), res => {
+            if (! res.users[0]) {
+                $adduser.prop("disabled", false)
+                lg_alert("无法找到指定用户")
+            }
+            else {
+                let usern = res.users[0].uid;
+                if (usersname.indexOf(usern) == -1) usersname.push(usern), usn[usern] = res.users[0].name;
+                writename();
+                $adduser.prop("disabled", false)
+            }
+        })
+    }
+    const func2 = () => {
+        $removeuser.prop("disabled", true)
+        $.get("/api/user/search?keyword=" + $("[name=username-passed]").val(), res => {
+            if (! res.users[0]) {
+                $removeuser.prop("disabled", false)
+                lg_alert("无法找到指定用户")
+            }
+            else {
+                let usern = res.users[0].uid;
+                usn[usern].empty();
+                usersname = usersname.filter(function(item) {
+                    return item != usern
+                });
+                writename();
+                $removeuser.prop("disabled", false)
+            }
+        })
+    }
+    const $adduser = $("#add-user").on("click", func), $removeuser = $("#remove-user").on("click", func2);
+    $("#empty-user").on("click", () => {
+        usn.length = usersname.length = 0; writename();
+    })
+    $("#search-user-passed").keydown(e => { e.key === "Enter" && func() })
 }, `
 .exlg-index-stat{
     height: 190px;
+}
+#exlg-rand-nameboard{
+    line-height: 0.5 !important;
+}
+.exlg-editor{
+    overflow: auto;
 }
 `)
 
@@ -1701,7 +1761,7 @@ mod.reg("keyboard-and-cli", "键盘操作与命令行", "@/.*", {
 
 mod.reg_board("search-user", "查找用户名", null, ({ $board }) => {
     $board.html(`
-        <h3>查找用户</h3>
+        <h2>查找用户</h2>
         <div class="am-input-group am-input-group-primary am-input-group-sm">
             <input type="text" class="am-form-field" placeholder="例：kkksc03，可跳转站长主页" name="username" id="search-user-input">
         </div>
