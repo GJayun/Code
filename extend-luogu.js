@@ -1020,7 +1020,7 @@ mod.reg("rand-footprint", "随机足迹", "@/", {
 				return x.pid == y.pid;
 			})
 		});
-        return arr1.length >= arr2.length;
+        return newarr.length >= arr2.length;
     }
     function isInclude(arr1, pid)
     {
