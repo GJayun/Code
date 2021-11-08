@@ -917,6 +917,7 @@ mod.reg("benben", "全网犇犇", "@/", {
 
 mod.reg("rand-footprint", "随机足迹", "@/", {
     total: { ty: "number" },
+    checked: { ty: "boolean" },
     Usersname: {
         ty: "tuple",
         lvs: [
@@ -944,11 +945,12 @@ mod.reg("rand-footprint", "随机足迹", "@/", {
                 <button class="am-btn am-btn-primary am-btn-sm" id="remove-user">移除</button>
                 <button class="am-btn am-btn-group am-btn-sm" id="empty-user">一键清空</button>
                 <button class="am-btn am-btn-success am-btn-sm" id="goto-users-passed">跳转</button>
-                <input type="checkbox" checked="true" id="check-ac">
+                <input type="checkbox" ${msto.checked? "checked=true": ""} id="check-ac">
                 包括已 AC 题目
             </p>
         </div>
     `);
+    console.log(msto.checked);
     $("div.am-u-md-3").after($board);
     let $nameboard = $(`
         <div class="am-u-md-2" id="exlg-rand-nameboard">
@@ -1030,7 +1032,7 @@ mod.reg("rand-footprint", "随机足迹", "@/", {
         return newArr.length != 0;
     }
     const rand_jump = async () => {
-        let isAC = $("#check-ac").get(0).checked;
+        let isAC = msto.checked;
         if (msto.total == 0) { lg_alert("您还未选择用户"); return; }
         let useruid = msto.Usersname[Math.floor(Math.random() * msto.total)];
         let myres = await lg_content(`/user/${uindow._feInjection.currentUser.uid}`);
@@ -1061,6 +1063,10 @@ mod.reg("rand-footprint", "随机足迹", "@/", {
     const $adduser = $("#add-user").on("click", add), $removeuser = $("#remove-user").on("click", rem);
     $("#empty-user").on("click", () => {
         msto.total = 0; writename();
+    })
+    $("#check-ac").on("click", () => {
+        msto.checked = $("#check-ac").get(0).checked;
+        console.log(msto.checked);
     })
     $("#goto-users-passed").on("click", rand_jump);
     $("#search-user-passed").keydown(e => { e.key === "Enter" && add() })
