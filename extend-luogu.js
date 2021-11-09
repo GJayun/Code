@@ -19,6 +19,8 @@
 // @require        https://cdn.luogu.com.cn/js/jquery-2.1.1.min.js
 // @require        https://cdn.bootcdn.net/ajax/libs/js-xss/0.3.3/xss.min.js
 // @require        https://cdn.bootcdn.net/ajax/libs/marked/2.0.1/marked.min.js
+// @require        https://cdn.luogu.com.cn/js/highcharts.js
+// @require        https://cdn.luogu.com.cn/js/highcharts-more.js
 // @require        https://greasyfork.org/scripts/429255-tm-dat/code/TM%20dat.js?version=955951
 //
 // @grant          GM_addStyle
@@ -914,7 +916,6 @@ mod.reg("benben", "全网犇犇", "@/", {
         })
 })
 
-
 mod.reg("rand-footprint", "随机足迹", "@/", {
     total: { ty: "number" },
     checked: { ty: "boolean" },
@@ -950,7 +951,6 @@ mod.reg("rand-footprint", "随机足迹", "@/", {
             </p>
         </div>
     `);
-    console.log(msto.checked);
     $("div.am-u-md-3").after($board);
     let $nameboard = $(`
         <div class="am-u-md-2" id="exlg-rand-nameboard">
@@ -959,6 +959,7 @@ mod.reg("rand-footprint", "随机足迹", "@/", {
         </div>
     `);
     $board.after($nameboard);
+    if (msto.total == null) msto.total = 0;
     const writename = () => {
         $(".exlg-editor").empty();
         for (let i = 0; i < msto.total; i++)
@@ -1006,8 +1007,8 @@ mod.reg("rand-footprint", "随机足迹", "@/", {
                     if (msto.Usersname[i] === `${usern}`) flag = 1;
                     if (flag)
                     {
-                        msto.Usn[i] = msto.Usn[i + 1];
-                        msto.Usersname[i] = msto.Usersname[i + 1];
+                        if(msto.Usn[i + 1] !== false) msto.Usn[i] = msto.Usn[i + 1];
+                        if(msto.Usersname[i + 1] !== false) msto.Usersname[i] = msto.Usersname[i + 1];
                     }
                 }
                 msto.total--;
@@ -1081,6 +1082,132 @@ mod.reg("rand-footprint", "随机足迹", "@/", {
     overflow: auto;
 }
 `)
+
+mod.reg("develop-training", "训练强化", "@/", null, () => {
+    let $board = $("<div class='am-u-md-4' name='exlg-train-board'></div>");
+    $board.html(`
+        <div class='lg-article exlg-index-stat'>
+            <h2>强化训练</h2>
+            <p>
+                单题：
+                <button class="am-btn am-btn-danger am-btn-sm" id="constructive-problem">构造题</button>
+                <button class="am-btn am-btn-primary am-btn-sm" id="dynamic-problem">DP 题</button>
+                <button class="am-btn am-btn-success am-btn-sm" id="single-problem">练习题</button>
+            </p>
+            <p>
+                比赛：
+                <button class="am-btn am-btn-warning am-btn-sm" id="practice-contest">练习赛</button>
+                <button class="am-btn am-btn-success am-btn-sm" id="cf-multiple-contest">CF 制</button>
+                <button class="am-btn am-btn-danger am-btn-sm" id="simulation-contest">模拟赛</button>
+            </p>
+        </div>
+    `);
+
+    $("#exlg-rand-nameboard").after($board);
+}, ``)
+
+let configs;
+mod.reg("exchart", "ex图表", "@/", null, () => {
+    let $board = $(`<div class="am-g" id="ex-chart"></div>`);
+    $board.appendTo($(".lg-index-content.am-center"));
+    $board.prev().insertAfter($board);
+    let $chart = $("div.am-u-md-9");
+    let $hc = $(`<div id="container3" class="am-u-md-4 am-text-center" style=" height:180px; margin-right: -20px" data-highcharts-chart="0"></div>`);
+    $chart.appendTo($board);
+    $chart.removeClass();
+    $chart.addClass("am-u-md");
+    $("#container").removeClass("am-u-md-6");
+    $("#container").addClass("am-u-md-4");
+    $("#container2").removeClass("am-u-md-6");
+    $("#container2").addClass("am-u-md-4");
+    $("#container2").after($hc);
+    let Config = async() => {
+        let u = await lg_content("https://www.luogu.com.cn/paste?_contentOnly");
+        let flag = 0, pageid;
+        u.currentData.pastes.result.map((u) => {
+            if (flag) return;
+            if (u.data.substr(0, 12) !== "#ExChartData") return;
+            let k = u.data;
+            pageid = u.id;
+            configs = JSON.parse(k.substr(12, k.lentgh));
+            flag = 1;
+            return;
+        });
+        if (configs) {
+            var dateStart = new Date(configs.date);
+            var dateEnd = new Date();
+            var difVal = Math.floor((dateEnd - dateStart) / (1000 * 60 * 60 * 24));
+            if (configs.constructive_problem >= difVal * 5)
+                configs.constructive_problem -= difVal * 5;
+            else configs.constructive_problem = 0;
+
+            if (configs.dynamic_problem >= difVal * 5)
+                configs.dynamic_problem -= difVal * 5;
+            else configs.dynamic_problem = 0;
+
+            if (configs.single_problem >= difVal * 5)
+                configs.single_problem -= difVal * 5;
+            else configs.single_problem = 0;
+
+            if (configs.practice_contest >= difVal * 5)
+                configs.practice_contest -= difVal * 5;
+            else configs.practice_contest = 0;
+
+            if (configs.cf_multiple_contest >= difVal * 5)
+                configs.cf_multiple_contest -= difVal * 5;
+            else configs.cf_multiple_contest = 0;
+
+            if (configs.simulation_contest >= difVal * 5)
+                configs.simulation_contest -= difVal * 5;
+            else configs.simulation_contest = 0;
+
+            configs.date = dateEnd.getFullYear() + "-" + (dateEnd.getMonth() + 1) + "-" + dateEnd.getDate();
+            return new Promise((r) => {
+                $.ajax({
+                    type: "POST",
+                    url: `https://www.luogu.com.cn/paste/edit/${pageid}`,
+                    beforeSend: function (request) {
+                        request.setRequestHeader(
+                            "x-csrf-token",
+                            $("meta[name='csrf-token']")[0].content
+                        );
+                    },
+                    contentType: "application/json;charset=UTF-8",
+                    data: JSON.stringify({
+                        public: false,
+                        data: "#ExChartData" + JSON.stringify(configs),
+                    }),
+                    success: () => r(),
+                });
+            });
+        }
+        else{
+            let date = new Date;
+            date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+            configs = {"constructive_problem": 1200, "dynamic_problem": 1200, "single_problem": 1200, "practice_contest": 1200, "cf_multiple_contest": 1200, "simulation_contest": 0, "date": date};
+            console.log(configs);
+            return new Promise((r) => {
+                $.ajax({
+                    type: "POST",
+                    url: `https://www.luogu.com.cn/paste/new`,
+                    beforeSend: function (request) {
+                        request.setRequestHeader(
+                            "x-csrf-token",
+                            $("meta[name='csrf-token']")[0].content
+                        );
+                    },
+                    contentType: "application/json;charset=UTF-8",
+                    data: JSON.stringify({
+                        public: false,
+                        data: "#ExChartData" + JSON.stringify(configs),
+                    }),
+                    success: () => r(),
+                });
+            });
+        }
+    };
+    // Config();           进行一个印的封
+}, ``)
 
 mod.reg("rand-problem-ex", "随机跳题ex", "@/", {
     exrand_difficulty: {
