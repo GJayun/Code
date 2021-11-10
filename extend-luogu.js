@@ -1112,14 +1112,14 @@ mod.reg("exchart", "ex图表", "@/", null, () => {
     $board.appendTo($(".lg-index-content.am-center"));
     $board.prev().insertAfter($board);
     let $chart = $("div.am-u-md-9");
-    let $hc = $(`<div id="container3" class="am-u-md-4 am-text-center" style=" height:180px; margin-right: -20px" data-highcharts-chart="0"></div>`);
+    let $hc = $(`<div id="container3" class="am-u-md-3-5 am-text-center" style=" height:180px; margin-right: 20px"></div>`);
     $chart.appendTo($board);
     $chart.removeClass();
-    $chart.addClass("am-u-md");
+    $chart.addClass("am-u-md-12");
     $("#container").removeClass("am-u-md-6");
-    $("#container").addClass("am-u-md-4");
+    $("#container").addClass("am-u-md-4-5");
     $("#container2").removeClass("am-u-md-6");
-    $("#container2").addClass("am-u-md-4");
+    $("#container2").addClass("am-u-md-4-5");
     $("#container2").after($hc);
     let Config = async() => {
         let u = await lg_content("https://www.luogu.com.cn/paste?_contentOnly");
@@ -1136,7 +1136,7 @@ mod.reg("exchart", "ex图表", "@/", null, () => {
         if (configs) {
             var dateStart = new Date(configs.date);
             var dateEnd = new Date();
-            var difVal = Math.floor((dateEnd - dateStart) / (1000 * 60 * 60 * 24));
+            var difVal = Math.floor(Math.abs(dateEnd - dateStart) / (1000 * 60 * 60 * 24));
             if (configs.constructive_problem >= difVal * 5)
                 configs.constructive_problem -= difVal * 5;
             else configs.constructive_problem = 0;
@@ -1162,7 +1162,7 @@ mod.reg("exchart", "ex图表", "@/", null, () => {
             else configs.simulation_contest = 0;
 
             configs.date = dateEnd.getFullYear() + "-" + (dateEnd.getMonth() + 1) + "-" + dateEnd.getDate();
-            return new Promise((r) => {
+            new Promise((r) => {
                 $.ajax({
                     type: "POST",
                     url: `https://www.luogu.com.cn/paste/edit/${pageid}`,
@@ -1185,8 +1185,7 @@ mod.reg("exchart", "ex图表", "@/", null, () => {
             let date = new Date;
             date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
             configs = {"constructive_problem": 1200, "dynamic_problem": 1200, "single_problem": 1200, "practice_contest": 1200, "cf_multiple_contest": 1200, "simulation_contest": 0, "date": date};
-            console.log(configs);
-            return new Promise((r) => {
+            new Promise((r) => {
                 $.ajax({
                     type: "POST",
                     url: `https://www.luogu.com.cn/paste/new`,
@@ -1205,9 +1204,21 @@ mod.reg("exchart", "ex图表", "@/", null, () => {
                 });
             });
         }
+        $("#container").empty();
+        $("#container2").empty();
+        $('#container').highcharts({"title":{"text":"","floating":true},"chart":{"backgroundColor":"rgba(0,0,0,0)"},"legend":{"enabled":false},"xAxis":{"categories":["Nov","Dec","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"],"floating":true,"minTickInterval":2},"yAxis":[{"labels":{"format":"{value}","style":{"color":"Highcharts.getOptions().colors[1]"}},"title":{"text":"\u7d2f\u79ef\u901a\u8fc7","style":{"color":"Highcharts.getOptions().colors[1]"}},"floor":836},{"labels":{"format":"{value}","style":{"color":"Highcharts.getOptions().colors[3]"},"enabled":false},"title":{"text":"\u65b0\u901a\u8fc7","style":{"color":"Highcharts.getOptions().colors[3]"},"enabled":false},"opposite":true}],"tooltip":{"shared":true},"series":[{"name":"\u7d2f\u79ef\u901a\u8fc7\u6570","type":"area","data":[841,875,913,939,964,980,1014,1024,1040,1072,1072,1104]},{"name":"\u5f53\u6708\u901a\u8fc7\u6570","type":"column","data":[29,34,38,27,26,17,34,10,17,34,0,32],"yAxis":1}],"credits":{"enabled":false}});
+        $('#container2').highcharts({"title":{"text":"","floating":true},"chart":{"backgroundColor":"rgba(0,0,0,0)"},"legend":{"enabled":false},"xAxis":{"categories":["11-1","11-2","11-3","11-4","11-5","11-6","11-7","11-8","11-9","11-10","11-11","11-12","11-13","11-14","11-15","11-16","11-17","11-18","11-19","11-20","11-21","11-22","11-23","11-24","11-25","11-26","11-27","11-28","11-29","11-30"],"floating":true,"minTickInterval":5},"yAxis":[{"labels":{"format":"{value}","style":{"color":"Highcharts.getOptions().colors[1]"},"enabled":false},"title":{"text":"\u7d2f\u79ef\u901a\u8fc7","style":{"color":"Highcharts.getOptions().colors[1]"},"enabled":false},"floor":1099},{"labels":{"format":"{value}","style":{"color":"Highcharts.getOptions().colors[3]"}},"title":{"text":"\u65b0\u901a\u8fc7","style":{"color":"Highcharts.getOptions().colors[3]"}},"opposite":true}],"tooltip":{"shared":true},"series":[{"name":"\u7d2f\u79ef\u901a\u8fc7\u6570","type":"area","data":[1104,1105,1105,1105,1105,1105,1105,1105,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]},{"name":"\u5f53\u65e5\u901a\u8fc7\u6570","type":"column","data":[0,1,0,0,0,0,0,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"yAxis":1}],"credits":{"enabled":false}});
+        $("#container3").highcharts({"title":{"text":"","floating":true},"chart":{"backgroundColor":"rgba(0,0,0,0)","type":"area","polar":true},"legend":{"enabled":false},"tooltip":{"shared":true},"xAxis": {"categories": ["构造题", "DP 题", "练习题", "练习赛", "CF 制","模拟赛"],"tickmarkPlacement": "on","lineWidth": 0},"yAxis": {"gridLineInterpolation": "polygon","lineWidth": 0,"min": 0},"series": [{"name": "你的积分","data": [configs.constructive_problem, configs.dynamic_problem, configs.single_problem, configs.practice_contest, configs.cf_multiple_contest, configs.simulation_contest],"pointPlacement": "on"}],"exporting":{"enabled":false},"credits":{"enabled":false}});
     };
-    // Config();           进行一个印的封
-}, ``)
+    Config();
+}, `
+.am-u-md-4-5 {
+    width: 37.5%
+}
+.am-u-md-3-5 {
+    width: 25%
+}
+`)
 
 mod.reg("rand-problem-ex", "随机跳题ex", "@/", {
     exrand_difficulty: {
