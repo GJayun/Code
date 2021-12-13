@@ -5,3 +5,4 @@
 #EXT-X-KEY:METHOD=AES-128,URI="https://class.luogu.com.cn/api/live/decryptKey/yugu21wsx3"
 #EXTINF:25.000000,
 https://raw.githubusercontent.com/GJayun/Code/main/2021-02-04-08_17_59_2021-02-04-12_01_48_HD_19.ts
+#EXT-X-ENDLIST
